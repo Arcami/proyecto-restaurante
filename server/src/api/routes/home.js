@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const postController = require('../controllers/post'); // Controlador 'post'
+
 
 // Ruta para la página de inicio
-router.get('/', postController.mostrarHome);
+router.get('/', (req, res) => {
+    res.send('<h1>Welcome to the Home Page!</h1>');
+});
 
 module.exports = router;

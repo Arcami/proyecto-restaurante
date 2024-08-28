@@ -1,5 +1,6 @@
-import Review from "";
-import User from "";
+import Reservation from "../models/reservation";
+import User from "../models/user.model";
+import Restaurant from "../models/restaurant.model";
 
 
 export const createReservation = async (req, res) => {
@@ -18,7 +19,7 @@ export const createReservation = async (req, res) => {
     }
 };
 
-/ READ /
+/* READ */
 export const getReservation = async (req, res) => {
     try {
         const reservation = await Reservation.find();
