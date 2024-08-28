@@ -1,31 +1,19 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import user from "../models/user.model"
 
-export const authUser = async (req, res) => {
-    try {
-        const {
-            username,
-            password,
-            picturePath,
-            role,
-            reservations,
-        } = req.body;
 
-        const salt = await bcrypt.genSalt();
-        const passwordHash = await bcrypt.hash(password, salt);
-
-        const newUser = new User({
-            username,
-            password,
-            picturePath,
-            role,
-            reservations,
-        });
-        const savedUser = await newUser.save();
-        res.status(201).json(savedUser);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+const getUserById = async (req, res) => {
+    const { id } = req.query;
+    const user = await User.findById(id)
+    if (!user) {
+        return res.json({ message: "usuario no existe" })
+    } else {
+        return res.json({ data: user })
     }
-};
+}
+
+module.exports = { getUserById}
+
+
+
+
 

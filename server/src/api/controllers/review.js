@@ -1,5 +1,5 @@
-import Review from "";
-import User from "";
+import Review from "../models/review.model";
+import User from "../models/user.model"
 
 
 export const createReview = async (req, res) => {
@@ -39,7 +39,7 @@ export const getUserReview = async (req, res) => {
     }
 };
 
-/ UPDATE */
+/* UPDATE */
 export const likeReview = async (req, res) => {
     try {
         const { id } = req.params;

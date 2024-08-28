@@ -3,11 +3,9 @@ const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema(
   {
-    id: { type: String, require: true },
-    username: { type: String, require: true },
+    userId: { type: String }, /* relacionarlo*/
     restaurantid: { type: String, require: true },
     text: { type: String },
-    picture: { type: String },
     score: { type: Number },
   },
   {
