@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const menuSchema = new Schema(
   {
-    restaurantid: { type: String, require: true },
+    restaurantid: { type: String, required: true },
     name: { type: String },
     picture: { type: String },
     ingredients: { type: String },
@@ -14,5 +14,7 @@ const menuSchema = new Schema(
     timestamps: true,
   }
 );
-const Menu = mongoose.model("menu", menuSchema);
+
+const Menu = mongoose.model('Menu', menuSchema);
+
 module.exports = Menu;

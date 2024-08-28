@@ -7,7 +7,6 @@ const reservationSchema = new Schema(
     restaurantId: { type: String, required: true }, 
     date: { type: Date, required: true }, 
     numberOfGuests: { type: Number, required: true }, 
-   
     status: { 
       type: String, 
       enum: ["pending", "confirmed", "cancelled"], 
@@ -25,6 +24,5 @@ const reservationSchema = new Schema(
 );
 
 const Reservation = mongoose.model("Reservation", reservationSchema);
-
 
 module.exports = Reservation;
