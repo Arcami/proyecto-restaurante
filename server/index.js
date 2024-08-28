@@ -1,19 +1,18 @@
 const express = require ("express")
 
-const  cors from 'cors';
-const  bodyParser from 'body-parser';
-
-const  dotenv from 'dotenv';
-const  multer from 'multer';
-const  path from 'path';
-const  { fileURLToPath } from 'url';
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const multer = require('multer');
+const path = require('path');
+const { fileURLToPath } = require('url');
 
 /* ROUTES */
 
-const  restaurantRoutes from './src/api/routes/restaurant.js';
-const  menuRoutes from './src/api/routes/menu.js';
-const  userRoutes from './src/api/routes/user.js';
-const  homeRoutes from './src/api/routes/home.js';
+const restaurantRoutes = require('./src/api/routes/restaurant.js');
+const menuRoutes = require('./src/api/routes/menu.js');
+const userRoutes = require('./src/api/routes/user.js');
+const homeRoutes = require('./src/api/routes/home.js');
 
 /* CONTROLLERS */
 
