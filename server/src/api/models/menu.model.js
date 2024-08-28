@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 const menuSchema = new Schema(
   {
     name: { type: String },
@@ -12,6 +13,6 @@ const menuSchema = new Schema(
     timestamps: true,
   }
 );
-const Menu = mongoose.model("Menu", menuSchema);
 
+const Menu = mongoose.model("Menu", menuSchema);
 module.exports = Menu;

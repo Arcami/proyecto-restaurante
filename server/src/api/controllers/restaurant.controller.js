@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const Restaurant = require("../models/restaurant.model");
 const Menu = require("../models/menu.model");
 
@@ -46,15 +45,17 @@ const getRestaurantById = async (req, res) => {
 
 const getRestaurantMenu = async (req, res) => {
   const { restaurantId } = req.params;
+
   try {
     const restaurant = await Restaurant.findById(restaurantId).populate("menu");
+
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });
     }
-    const menuItems = restaurant.menu;
-    res.json({ menu: menuItems });
+
+    res.json({ menu: restaurant.menu });
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching restaurant menu:", error);
     res.status(500).json({ error: error.message });
   }
 };
