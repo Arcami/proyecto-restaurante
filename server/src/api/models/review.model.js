@@ -1,19 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
 const reviewSchema = new Schema(
   {
-    id: { type: String, require: true },
-    username: { type: String, require: true },
-    restaurantid: { type: String, require: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    restaurantId: {
+      type: Schema.Types.ObjectId,
+      ref: "Restaurant",
+      required: true,
+    },
     text: { type: String },
     picture: { type: String },
     score: { type: Number },
   },
   {
-    collection: "users",
+    collection: "reviews",
     timestamps: true,
   }
 );
-const Review = mongoose.model("review", reviewSchema);
+const Review = mongoose.model("Review", reviewSchema);
+
 module.exports = Review;
