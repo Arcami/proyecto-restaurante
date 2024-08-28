@@ -14,7 +14,7 @@ connectDB();
 const userRoutes = require("./src/api/routes/user.route");
 const restaurantRoutes = require("./src/api/routes/restaurant.route");
 
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 app.use("/restaurants", restaurantRoutes); // Protected route
 
 app.get("/", (req, res) => {
