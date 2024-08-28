@@ -1,3 +1,6 @@
+/* 
+|-------------- Lo pasamos a menu --------------|
+
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/post'); // Controlador 'post'
@@ -6,3 +9,6 @@ const postController = require('../controllers/post'); // Controlador 'post'
 router.get('/', postController.mostrarRestaurantMenu);
 
 module.exports = router;
+ */
+
+// Borrar este archivo
