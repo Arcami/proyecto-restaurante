@@ -1,5 +1,4 @@
-import Review from "";
-import User from "";
+import User from "../models/user.model";
 
 
 export const createReservation = async (req, res) => {
