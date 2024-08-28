@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const Restaurant = require('../models/restaurant.model');
 
-exports.authRestaurant = async (req, res) => {
+// Función para autenticar un restaurante
+const authRestaurant = async (req, res) => {
     try {
         const {
             name,
@@ -10,11 +11,11 @@ exports.authRestaurant = async (req, res) => {
             category,
             reservations,
             menu,
-            password  
+            password
         } = req.body;
 
         const salt = await bcrypt.genSalt();
-        const passwordHash = await bcrypt.hash(password, salt);  
+        const passwordHash = await bcrypt.hash(password, salt);
 
         const newRestaurant = new Restaurant({
             name,
@@ -23,12 +24,16 @@ exports.authRestaurant = async (req, res) => {
             category,
             reservations,
             menu,
-            password: passwordHash  
+            password: passwordHash
         });
-        
+
         const savedRestaurant = await newRestaurant.save();
         res.status(201).json(savedRestaurant);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+};
+
+module.exports = {
+    authRestaurant
 };

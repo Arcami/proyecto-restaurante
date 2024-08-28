@@ -3,7 +3,7 @@ const User = require("../models/user.model");
 const Restaurant = require("../models/restaurant.model");
 
 // Crear una nueva reserva
-exports.createReservation = async (req, res) => {
+const createReservation = async (req, res) => {
     try {
         const { userId, restaurantId, date, numberOfGuests, contactInfo } = req.body;
 
@@ -30,7 +30,7 @@ exports.createReservation = async (req, res) => {
 };
 
 // Obtener todas las reservas
-exports.getReservation = async (req, res) => {
+const getReservation = async (req, res) => {
     try {
         const reservations = await Reservation.find();
         res.status(200).json(reservations);
@@ -40,7 +40,7 @@ exports.getReservation = async (req, res) => {
 };
 
 // Obtener las reservas de un usuario específico
-exports.getUserReservation = async (req, res) => {
+const getUserReservation = async (req, res) => {
     try {
         const { userId } = req.params;
         const reservations = await Reservation.find({ userId });
@@ -51,7 +51,7 @@ exports.getUserReservation = async (req, res) => {
 };
 
 // Eliminar una reserva
-exports.deleteReservation = async (req, res) => {
+const deleteReservation = async (req, res) => {
     try {
         const { id } = req.query;
         const deleted = await Reservation.findByIdAndDelete(id);
@@ -62,5 +62,13 @@ exports.deleteReservation = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
+};
+
+// Exportar las funciones
+module.exports = {
+    createReservation,
+    getReservation,
+    getUserReservation,
+    deleteReservation
 };
 

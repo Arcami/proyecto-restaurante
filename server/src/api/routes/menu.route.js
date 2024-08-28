@@ -3,7 +3,7 @@ const router = express.Router();
 const { getMenu, createOrder } = require('../controllers/menu.controller');
 
 // Ruta para obtener el menú del restaurante
-router.get('/', getMenu);
+router.get('/menu', getMenu);
 
 // Ruta para hacer un pedido
 router.post('/order', createOrder);

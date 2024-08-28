@@ -54,7 +54,7 @@ const getUserById = async (req, res) => {
     }
 };
 
-// Exportar las funciones como un objeto
+
 module.exports = {
     registerUser,
     login,
