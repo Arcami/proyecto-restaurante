@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const postController = require('../controllers/post'); // Controlador 'post'
+const { getMenu } = require('../controllers/menu.controller'); // Controlador 'post'
 
 // Ruta para el menú del restaurante
-router.get('/', postController.mostrarRestaurantMenu);
+router.get('/', getMenu);
 
 module.exports = router;

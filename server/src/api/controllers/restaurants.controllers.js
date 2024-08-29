@@ -1,8 +1,7 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+const bcrypt = require("bcrypt");
+const Restaurant = require("../models/restaurant.model");
 
-export const authRestaurant = async (req, res) => {
+const authRestaurant = async (req, res) => {
     try {
         const {
             name,
@@ -30,3 +29,23 @@ export const authRestaurant = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+const getRestaurant = async (req, res) => {
+    try {
+        const restaurantList = await Restaurant.find();
+        res.json(restaurantList)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getRestaurantById = async (req, res) => {
+    const { id } = req.query;
+    const restaurant = await Restaurant.findById(id)
+    if (!restaurant) {
+        return res.json({ message: "no existe" })
+    } else {
+        return res.json({ data: restaurant })
+    }
+}
+
+module.exports = { getRestaurant, authRestaurant, getRestaurantById }

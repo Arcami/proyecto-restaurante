@@ -1,8 +1,10 @@
-import Review from "../models/review.model";
-import User from "../models/user.model";
+
+const Review = require('../models/review.model');
+const User = require('../models/user.model');
 
 
-export const createReview = async (req, res) => {
+
+const createReview = async (req, res) => {
     try {
         const { username, description } = req.body;
         const user = await User.findById(userId);
@@ -20,7 +22,7 @@ export const createReview = async (req, res) => {
 };
 
 / READ /
-export const getReview = async (req, res) => {
+const getReview = async (req, res) => {
     try {
         const review = await Review.find();
         res.status(200).json(review);
@@ -29,7 +31,7 @@ export const getReview = async (req, res) => {
     }
 };
 
-export const getUserReview = async (req, res) => {
+const getUserReview = async (req, res) => {
     try {
         const { username } = req.params;
         const review = await Review.find({ username });
@@ -39,8 +41,8 @@ export const getUserReview = async (req, res) => {
     }
 };
 
-/ UPDATE */
-export const likeReview = async (req, res) => {
+/* UPDATE */
+const likeReview = async (req, res) => {
     try {
         const { id } = req.params;
         const { username } = req.body;
@@ -63,4 +65,5 @@ export const likeReview = async (req, res) => {
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
-};
+}
+module.exports = { createReview, getReview, getUserReview, likeReview }

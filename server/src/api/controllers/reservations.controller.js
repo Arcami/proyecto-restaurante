@@ -1,7 +1,11 @@
-import User from "../models/user.model";
 
 
-export const createReservation = async (req, res) => {
+const Reservation = require("../models/reservation");
+const User = require("../models/user.model");
+const Restaurant = require("../models/restaurant.model");
+
+
+const createReservation = async (req, res) => {
     try {
         const { username } = req.body;
         const user = await User.findById(userId);
@@ -17,8 +21,8 @@ export const createReservation = async (req, res) => {
     }
 };
 
-/ READ /
-export const getReservation = async (req, res) => {
+/* READ */
+const getReservation = async (req, res) => {
     try {
         const reservation = await Reservation.find();
         res.status(200).json(reservation);
@@ -27,7 +31,7 @@ export const getReservation = async (req, res) => {
     }
 };
 
-export const getUserReservation = async (req, res) => {
+const getUserReservation = async (req, res) => {
     try {
         const { username } = req.params;
         const reservation = await Reservation.find({ username });
@@ -46,3 +50,4 @@ const deleteReservation = async (req, res) => {
 
     return res.json(deleted)
 }
+module.exports = { createReservation, getReservation, getUserReservation, deleteReservation }

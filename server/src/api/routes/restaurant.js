@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const postController = require('../controllers/post'); // Controlador 'post'
+const { getRestaurant, getRestaurantById } = require('../controllers/restaurants.controllers'); // Controlador 'post'
 
 // Ruta para la página de restaurantes
-router.get('/', postController.mostrarRestaurant);
+router.get('/', getRestaurant);
 
 module.exports = router;

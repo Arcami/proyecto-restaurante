@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/user.model";
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user.model");
 
 const registerUser = async (req, res) => {
     try {
@@ -58,4 +58,19 @@ const deleteUser = async (req, res) => {
     return res.json(deleted)
 }
 
-module.exports = { registerUser, login, deleteUser }
+const getUserById = async (req, res) => {
+    const { id } = req.query;
+    const user = await User.findById(id)
+    if (!user) {
+        return res.json({ message: "usuario no existe" })
+    } else {
+        return res.json({ data: user })
+    }
+}
+
+module.exports = { registerUser, login, deleteUser, getUserById }
+
+
+
+
+
