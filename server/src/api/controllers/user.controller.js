@@ -4,7 +4,9 @@ const User = require("../models/user.model");
 
 const register = async (req, res) => {
   try {
-    const { username, password, picturePath, role, reservations } = req.body;
+    const { username, password, role, reservations } = req.body;
+
+    console.log(req.file.path);
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -12,7 +14,7 @@ const register = async (req, res) => {
     const newUser = new User({
       username,
       password: hashedPassword,
-      picturePath,
+      picturePath: req.file && req.file.path ? req.file.path : null,
       role,
       reservations,
     });
