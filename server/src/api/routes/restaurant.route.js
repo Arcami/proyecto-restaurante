@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { authRestaurant } = require('../controllers/restaurants.controller');
+const { authRestaurant, getAllRestaurants } = require('../controllers/restaurants.controller');
 
 // Ruta para crear un restaurante
-router.post('/', authRestaurant);
+router.post('/register', authRestaurant);
+
+// Ruta para obtener todos los restaurantes
+router.get('/', getAllRestaurants);
 
 module.exports = router;
