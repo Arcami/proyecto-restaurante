@@ -30,7 +30,41 @@ const createOrder = async (req, res) => {
     }
 };
 
+// Editar una orden existente
+const updateOrder = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedOrder = await Order.findByIdAndUpdate(id, req.body, { new: true });
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.status(200).json(updatedOrder);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+// Eliminar una orden existente
+const deleteOrder = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedOrder = await Order.findByIdAndDelete(id);
+
+        if (!deletedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.status(200).json({ message: 'Order deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     getMenu,
-    createOrder
+    createOrder,
+    updateOrder,
+    deleteOrder
 };
