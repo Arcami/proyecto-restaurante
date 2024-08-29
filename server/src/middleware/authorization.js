@@ -7,18 +7,17 @@ const isAuth = async (req, res, next) => {
   if (!authorization) {
     return res.status(401).json({ message: "Not authorized" });
   }
-  if (!authorization.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Invalid authorization format" });
-  }
+
   const token = authorization.split(" ")[1];
   if (!token) {
-    return res.json({ message: "Authorization token is missing" });
+    return res.status(401).json({ message: "Authorization token is missing" });
   }
 
+  let tokenVerify;
   try {
-    const tokenVerify = verifyToken(token);
+    tokenVerify = verifyToken(token);
 
-    if (!tokenVerify._id) {
+    if (!tokenVerify.id) {
       return res
         .status(401)
         .json({ message: "Invalid token: User ID not found" });
@@ -28,14 +27,27 @@ const isAuth = async (req, res, next) => {
   }
 
   try {
-    const logged = await User.findById(tokenVerify._id);
+    const logged = await User.findById(tokenVerify.id);
     if (!logged) {
       return res.status(404).json({ message: "User not found" });
     }
-    req.dataUser = logged;
+    req.dataUser = logged; // Añadimos al body esta variable
+    /* {
+        _id: new ObjectId('66cf5ad42d177921054c66e5'),
+        username: 'arnau',
+        password: '$2b$10$O9OnTPfA9XMJyALM9Srmueh2lGU3Zp4C3.BmvE1E5ay3/57Yat.Oi',
+        role: 'user',
+        reservations: [],
+        createdAt: 2024-08-28T17:13:56.715Z,
+        updatedAt: 2024-08-28T17:13:56.715Z,
+        __v: 0
+    } */
   } catch (error) {
-    return res.status(500).json({ message: "Server error" });
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
   }
+
   next();
 };
 
