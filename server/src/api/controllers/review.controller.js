@@ -28,26 +28,7 @@ const createReview = async (req, res) => {
     }
 };
 
-// Leer todas las reseñas
-const getAllReviews = async (req, res) => {
-    try {
-        const reviews = await Review.find();
-        res.status(200).json(reviews);
-    } catch (err) {
-        res.status(404).json({ message: err.message });
-    }
-};
 
-// Leer reseñas de un usuario
-const getUserReviews = async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const reviews = await Review.find({ userId });
-        res.status(200).json(reviews);
-    } catch (err) {
-        res.status(404).json({ message: err.message });
-    }
-};
 
 // Leer reseñas de un restaurante
 const getRestaurantReviews = async (req, res) => {
@@ -60,33 +41,6 @@ const getRestaurantReviews = async (req, res) => {
     }
 };
 
-// Actualizar reseña (para añadir likes)
-const likeReview = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { userId } = req.body; // Cambié de username a userId para consistencia
-
-        const review = await Review.findById(id);
-        if (!review) return res.status(404).json({ message: "Review not found" });
-
-        // Manejo de likes
-        if (review.likes.includes(userId)) {
-            review.likes = review.likes.filter(like => like !== userId);
-        } else {
-            review.likes.push(userId);
-        }
-
-        const updatedReview = await Review.findByIdAndUpdate(
-            id,
-            { likes: review.likes },
-            { new: true }
-        );
-
-        res.status(200).json(updatedReview);
-    } catch (err) {
-        res.status(404).json({ message: err.message });
-    }
-};
 
 // Eliminar una reseña
 const deleteReview = async (req, res) => {
@@ -102,9 +56,6 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
     createReview,
-    getAllReviews,
-    getUserReviews,
     getRestaurantReviews,
-    likeReview,
     deleteReview
 };

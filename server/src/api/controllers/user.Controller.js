@@ -7,6 +7,11 @@ const registerUser = async (req, res) => {
     try {
         const { username, password, picture, role, reservations } = req.body;
 
+        
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+
+      
         const newUser = new User({
             username,
             password: passwordHash, 
@@ -15,6 +20,7 @@ const registerUser = async (req, res) => {
             reservations,
         });
 
+        // Guardar usuario en la base de datos
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
     } catch (err) {
@@ -50,7 +56,6 @@ const getUserById = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-
 
 module.exports = {
     registerUser,

@@ -55,12 +55,7 @@ app.use('/menus', menuRoutes);
 app.use('/reservations', reservationRoutes); 
 app.use('/reviews', reviewRoutes); 
 
-/* Conectar a la base de datos
-const DB_URI = process.env.DB_URI || 'mongodb://localhost:5000/proyecto';
-mongoose.connect(DB_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch(err => console.error("Could not connect to MongoDB", err));
-*/
+
 
 
 // Iniciar el servidor
