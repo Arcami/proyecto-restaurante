@@ -1,8 +1,8 @@
 const express = require('express');
 const {
     createReservation,
-    getReservation,
-    getUserReservation,
+    getReservations,
+    getUserReservations,
     deleteReservation
 } = require('../controllers/reservations.Controller');
 
@@ -12,10 +12,10 @@ const router = express.Router();
 router.post('/create', createReservation);
 
 // Ruta para obtener todas las reservas
-router.get('/', getReservation);
+router.get('/', getReservations);
 
 // Ruta para obtener reservas de un usuario específico
-router.get('/:userId', getUserReservation);
+router.get('/:id', getUserReservations);
 
 // Ruta para eliminar una reserva
 router.delete('/delete', deleteReservation);

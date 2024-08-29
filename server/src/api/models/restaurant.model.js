@@ -8,13 +8,13 @@ const restaurantSchema = new Schema({
     category: { type: String, required: true },
     reservations: [{ type: Schema.Types.ObjectId, ref: "Reservation" }],
     menu: [{ type: Schema.Types.ObjectId, ref: "Menu" }],
-    password: { type: String, required: true }, 
+    password: { type: String, required: true },
 }, {
     collection: "restaurants",
     timestamps: false
 });
 
-const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+const Restaurant = mongoose.model('restaurants', restaurantSchema);
 
 
 module.exports = Restaurant;

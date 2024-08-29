@@ -33,7 +33,7 @@ const createOrder = async (req, res) => {
 // Editar una orden existente
 const updateOrder = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.query;
         const updatedOrder = await Order.findByIdAndUpdate(id, req.body, { new: true });
 
         if (!updatedOrder) {
