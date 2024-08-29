@@ -18,7 +18,7 @@ const reservationSchema = new Schema(
     },
   },
   {
-    collection: "reservations", // Nombre de la colección en MongoDB
+    collection: "reservations", 
     timestamps: true, 
   }
 );

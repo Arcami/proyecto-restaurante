@@ -6,14 +6,16 @@ const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose'); 
 const helmet = require('helmet'); 
+const { connectDB } = require('./src/utils/db.js')
+
 
 // Rutas
 const restaurantRoutes = require('./src/api/routes/restaurant.route.js');
 const menuRoutes = require('./src/api/routes/menu.route.js');
 const userRoutes = require('./src/api/routes/user.route.js');
 const homeRoutes = require('./src/api/routes/home.route.js');
-const reservationRoutes = require('./src/api/routes/Reservation.route.js'); // Añade las rutas de reservas
-const reviewRoutes = require('./src/api/routes/review.route.js'); // Añade las rutas de reseñas
+const reservationRoutes = require('./src/api/routes/Reservation.route.js'); 
+const reviewRoutes = require('./src/api/routes/review.route.js'); 
 
 // Configuración
 dotenv.config();
@@ -29,6 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
+connectDB()
+
 // Archivos estáticos
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
@@ -38,24 +42,26 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, 'public/assets'));
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Asegura nombres únicos
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 const upload = multer({ storage });
 
 // Rutas
-app.use('/', homeRoutes); // Ruta de inicio
+app.use('/', homeRoutes); 
 app.use('/users', userRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/menus', menuRoutes);
-app.use('/reservations', reservationRoutes); // Ruta para reservas
-app.use('/reviews', reviewRoutes); // Ruta para reseñas
+app.use('/reservations', reservationRoutes); 
+app.use('/reviews', reviewRoutes); 
 
-// Conectar a la base de datos
-const DB_URI = process.env.DB_URI || 'mongodb://localhost:27017/yourdbname';
+/* Conectar a la base de datos
+const DB_URI = process.env.DB_URI || 'mongodb://localhost:5000/proyecto';
 mongoose.connect(DB_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.error("Could not connect to MongoDB", err));
+*/
+
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 5000;
