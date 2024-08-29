@@ -53,8 +53,27 @@ const getUserById = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    console.log(users);
+
+    if (users.length === 0) {
+      return res.json({ message: "Could not find any user" });
+    } else {
+      return res.json({ data: users });
+    }
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "An error occurred while fetching users" });
+  }
+};
+
 module.exports = {
   register,
   login,
   getUserById,
+  getAllUsers,
 };
