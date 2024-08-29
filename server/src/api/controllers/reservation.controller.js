@@ -1,31 +1,42 @@
-const User = require("");
+const User = require("../models/user.model");
+const Reservation = require("../models/reservation.model");
+const Restaurant = require("../models/restaurant.model");
 
 export const createReservation = async (req, res) => {
   try {
-    const { username } = req.body;
-    const user = await User.findById(userId);
-    const newReservation = new Reservation({
-      username,
-    });
-    await newReservation.save();
+    const { userId, restaurantId, date, numberOfGuests, contactInfo } =
+      req.body;
 
-    const reservation = await Reservation.find();
-    res.status(201).json(reservation);
+    if (!userId || !restaurantId || !date || !numberOfGuests || !contactInfo) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
+
+    const newReservation = new Reservation({
+      userId,
+      restaurantId,
+      date,
+      numberOfGuests,
+      contactInfo,
+    });
+
+    const savedReservation = await newReservation.save();
+
+    res.status(201).json(savedReservation);
   } catch (err) {
     res.status(409).json({ message: err.message });
   }
 };
 
-/ READ /;
-export const getReservation = async (req, res) => {
+export const getAllReservations = async (req, res) => {
   try {
-    const reservation = await Reservation.find();
-    res.status(200).json(reservation);
+    const reservations = await Reservation.find();
+    res.status(200).json(reservations);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
 };
 
+// Revisar esta
 export const getUserReservation = async (req, res) => {
   try {
     const { username } = req.params;
@@ -40,15 +51,15 @@ const deleteReservation = async (req, res) => {
   const { id } = req.query;
   const deleted = await Reservation.findByIdAndDelete(id);
   if (!deleted) {
-    return res.json({ message: "la reserva no existe" });
+    return res.json({ message: "No reservation found" });
   }
 
-  return res.json(deleted);
+  return res.status(200).json(deleted);
 };
 
 module.exports = {
   createReservation,
-  getReservation,
+  getAllReservations,
   getUserReservation,
   deleteReservation,
 };
