@@ -34,6 +34,20 @@ const authRestaurant = async (req, res) => {
     }
 };
 
+
+// Función para obtener todos los restaurantes
+const getAllRestaurants = async (req, res) => {
+    try {
+        const restaurants = await Restaurant.find();
+
+        res.status(200).json(restaurants);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+
 module.exports = {
-    authRestaurant
+    authRestaurant,
+    getAllRestaurants
 };
