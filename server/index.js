@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const { connectDB } = require("./src/utils/db");
 const cloudinary = require("cloudinary").v2;
+const { swaggerUi, specs } = require("./src/swagger");
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ cloudinary.config({
 const app = express();
 
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 connectDB();
 
