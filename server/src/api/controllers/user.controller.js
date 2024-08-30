@@ -5,6 +5,8 @@ const User = require("../models/user.model");
 const register = async (req, res) => {
   try {
     const { username, password, role, reservations } = req.body;
+    console.log(role);
+    console.log(reservations);
 
     console.log(req.file.path);
 
@@ -15,8 +17,8 @@ const register = async (req, res) => {
       username,
       password: hashedPassword,
       picturePath: req.file && req.file.path ? req.file.path : null,
-      role,
-      reservations,
+      // role,
+      // reservations,
     });
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
