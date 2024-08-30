@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth, googleAuthProvider } from '../../firebase';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import './styles.css';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [userType, setUserType] = useState('client');
+    const navigate = useNavigate();
 
     const handleRegister = async () => {
         if (password === confirmPassword) {
             try {
                 await createUserWithEmailAndPassword(auth, username, password);
                 console.log("Registro exitoso");
+                navigate('/dashboard'); // Redirige al dashboard después del registro
             } catch (error) {
                 console.error("Error en el registro:", error);
             }
@@ -26,10 +30,7 @@ const Register = () => {
         try {
             await signInWithPopup(auth, googleAuthProvider);
             console.log("Inicio de sesión con Google exitoso");
-            // Redirigir al usuario a una pagina
-
-            window.location.href = "/dashboard";  // Cambia "/dashboard" por la ruta q desees
-
+            navigate('/dashboard'); // Redirige al dashboard después del inicio de sesión
         } catch (error) {
             console.error("Error al iniciar sesión con Google:", error);
         }
@@ -41,7 +42,7 @@ const Register = () => {
                 <h2 className="text-center mb-4">Registro</h2>
 
                 <input
-                    type="text"
+                    type="email"
                     className="form-control mb-3"
                     placeholder="Usuario (email)"
                     value={username}
@@ -64,9 +65,9 @@ const Register = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
-                <h7 className="text-center mb-3">
+                <h6 className="text-center mb-3">
                     ¿Eres restaurante? <a href='/restaurantregister'>Haz clic aquí</a>
-                </h7>
+                </h6>
 
                 <button
                     onClick={handleRegister}
@@ -77,7 +78,7 @@ const Register = () => {
                 <button
                     onClick={handleGoogleLogin}
                     className="btn btn-danger w-100 mb-3">
-                    Iniciar sesión con Google
+                    Registrarse con Google
                 </button>
 
                 <div className="text-center mt-3">
