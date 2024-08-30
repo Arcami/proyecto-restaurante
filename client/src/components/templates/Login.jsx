@@ -5,6 +5,16 @@ import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
+const LoginButton = ({ onClick, loading, children, variant }) => (
+    <button
+        onClick={onClick}
+        className={`btn btn-${variant} w-100 mb-3`}
+        disabled={loading}
+        aria-busy={loading}
+    >
+        {loading ? 'Cargando...' : children}
+    </button>
+);
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -18,11 +28,9 @@ const Login = () => {
         setError('');
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            console.log("Inicio de sesión exitoso");
-            navigate('/dashboard');  // Redirige al dashboard después del inicio de sesión
+            navigate('/dashboard');
         } catch (error) {
-            setError("Error al iniciar sesión: " + error.message);
-            console.error("Error al iniciar sesión:", error);
+            setError(`Error al iniciar sesión: ${error.message}`);
         } finally {
             setLoading(false);
         }
@@ -33,24 +41,22 @@ const Login = () => {
         setError('');
         try {
             await signInWithPopup(auth, googleAuthProvider);
-            console.log("Inicio de sesión con Google exitoso");
-            navigate('/dashboard');  // Redirige al dashboard después del inicio de sesión
+            navigate('/dashboard');
         } catch (error) {
-            setError("Error al iniciar sesión con Google: " + error.message);
-            console.error("Error al iniciar sesión con Google:", error);
+            setError(`Error al iniciar sesión con Google: ${error.message}`);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="row justify-content-center">
-                <div className="col-md-6 col-lg-4">
+        <div className="container d-flex justify-content-center align-items-center min-vh-100">
+            <div className="row justify-content-center w-100">
+                <div className="col-11 col-sm-8 col-md-6 col-lg-4">
                     <div className="card p-4 shadow-sm">
                         <h2 className="text-center mb-4">Iniciar Sesión</h2>
 
-                        {error && <div className="alert alert-danger mb-3">{error}</div>} {/* Muestra el error si existe */}
+                        {error && <div className="alert alert-danger mb-3">{error}</div>}
 
                         <input
                             type="email"
@@ -58,6 +64,7 @@ const Login = () => {
                             placeholder="Correo electrónico"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            aria-label="Correo electrónico"
                         />
 
                         <input
@@ -66,23 +73,16 @@ const Login = () => {
                             placeholder="Contraseña"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            aria-label="Contraseña"
                         />
 
-                        <button
-                            onClick={handleLogin}
-                            className="btn btn-primary w-100 mb-3"
-                            disabled={loading}
-                        >
-                            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-                        </button>
+                        <LoginButton onClick={handleLogin} loading={loading} variant="primary">
+                            Iniciar sesión
+                        </LoginButton>
 
-                        <button
-                            onClick={handleGoogleLogin}
-                            className="btn btn-danger w-100 mb-3"
-                            disabled={loading}
-                        >
-                            {loading ? 'Iniciando sesión con Google...' : 'Iniciar sesión con Google'}
-                        </button>
+                        <LoginButton onClick={handleGoogleLogin} loading={loading} variant="danger">
+                            Iniciar sesión con Google
+                        </LoginButton>
 
                         <div className="text-center mt-3">
                             <a href="/register" className="text-primary">

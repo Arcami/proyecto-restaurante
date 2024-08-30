@@ -1,16 +1,26 @@
 /* styles.css */
+
+/* Ajustes adicionales para dispositivos móviles */
 @media (max-width: 576px) {
     .card {
-        padding: 1.5rem;
-        width: 90%;
+        padding: 20px;
     }
 
     .form-control {
-        font-size: 0.875rem;
+        font-size: 1rem;
     }
 
-    .btn {
-        font-size: 0.875rem;
-
+    h2 {
+        font-size: 1.5rem;
     }
+}
+
+/* Estilo general */
+.card {
+    border-radius: 10px;
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 10px 20px;
 }
