@@ -33,7 +33,7 @@ const createReview = async (req, res) => {
 // Leer reseñas de un restaurante
 const getRestaurantReviews = async (req, res) => {
     try {
-        const { restaurantId } = req.params;
+        const { restaurantId } = req.query;
         const reviews = await Review.find({ restaurantId });
         res.status(200).json(reviews);
     } catch (err) {
@@ -45,7 +45,7 @@ const getRestaurantReviews = async (req, res) => {
 // Eliminar una reseña
 const deleteReview = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.query;
         const deletedReview = await Review.findByIdAndDelete(id);
         if (!deletedReview) return res.status(404).json({ message: "Review not found" });
         res.status(200).json({ message: "Review deleted successfully", deletedReview });

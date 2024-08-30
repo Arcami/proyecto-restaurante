@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 const reservationSchema = new Schema(
   {
     userId: {
-      type: mongoose.Schema.Types.ObjectId, // Se recomienda usar ObjectId si se está relacionando con un documento en otra colección
-      ref: 'users', // Referencia al modelo User, si tienes un modelo User
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'users', 
       required: true
     },
     restaurantId: {
-      type: mongoose.Schema.Types.ObjectId, // Se recomienda usar ObjectId si se está relacionando con un documento en otra colección
-      ref: 'restaurants', // Referencia al modelo Restaurant, si tienes un modelo Restaurant
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'restaurant', 
       required: true
     },
     date: {
@@ -21,6 +21,17 @@ const reservationSchema = new Schema(
       type: Number,
       required: true
     },
+
+    menuItems: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "menu",
+      required: true
+    }],
+    totalAmount: {
+      type: Number,
+      required: true
+    },
+
     status: {
       type: String,
       enum: ["pending", "confirmed", "cancelled"],
@@ -31,7 +42,7 @@ const reservationSchema = new Schema(
         type: String,
         required: true
       },
-      email: {
+      guestName: {
         type: String,
         required: true
       },

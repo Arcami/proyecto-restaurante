@@ -8,6 +8,7 @@ const userSchema = new Schema({
     picture: { type: String },
     role: { type: String, required: true, enum: ["user", "owner"], default: "user" },
 
+
 }, {
     collection: "users"
 });

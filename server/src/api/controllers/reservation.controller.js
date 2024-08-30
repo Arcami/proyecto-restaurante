@@ -5,7 +5,7 @@ const Restaurant = require("../models/restaurant.model");
 // Crear una nueva reserva
 const createReservation = async (req, res) => {
     try {
-        const { userId, restaurantId, date, numberOfGuests, contactInfo } = req.body;
+        const { userId, restaurantId, date, numberOfGuests, menuItems, totalAmount, contactInfo } = req.body;
 
         const user = await User.findById(userId);
         const restaurant = await Restaurant.findById(restaurantId);
@@ -19,6 +19,8 @@ const createReservation = async (req, res) => {
             restaurantId,
             date,
             numberOfGuests,
+            menuItems,
+            totalAmount,
             contactInfo
         });
 
@@ -29,28 +31,49 @@ const createReservation = async (req, res) => {
     }
 };
 
-// Obtener todas las reservas
-const getReservation = async (req, res) => {
+const editReservation = async (req, res) => {
     try {
-        const reservations = await Reservation.find();
-        res.status(200).json(reservations);
+        const reservation = req.body;
+        console.log(reservation);
+        const updated = await Reservation.findByIdAndUpdate(reservation.id, reservation,  { new: true });
+        if(!updated) {
+            res.status(404).json({ message: "No se ha podido modificar la reserva"});
+        }
+        res.status(200).json(updated);
     } catch (err) {
-        res.status(404).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 };
 
-// Obtener las reservas de un usuario específico
-const getUserReservation = async (req, res) => {
+
+const getUserReservations = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const { userId } = req.query;
         const reservations = await Reservation.find({ userId });
+        if(!reservations){
+            res.status(404).json({ message: "No hay reservas para este usuario"});
+        }
+        res.status(200).json(reservations);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+
+const getRestaurantReservations = async (req, res) => {
+    try {
+        const { restaurantId } = req.query;
+        const reservations = await Reservation.find({ restaurantId });
+        if(!reservations){
+            res.status(404).json({ message: "No hay reservas para este restaurante"});
+        }
         res.status(200).json(reservations);
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
 };
 
-// Eliminar una reserva
+
 const deleteReservation = async (req, res) => {
     try {
         const { id } = req.query;
@@ -67,8 +90,9 @@ const deleteReservation = async (req, res) => {
 // Exportar las funciones
 module.exports = {
     createReservation,
-    getReservation,
-    getUserReservation,
-    deleteReservation
+    getUserReservations,
+    getRestaurantReservations,
+    deleteReservation,
+    editReservation
 };
 

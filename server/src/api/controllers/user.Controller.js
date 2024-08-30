@@ -48,7 +48,7 @@ const login = async (req, res) => {
 // Función para obtener un usuario por ID
 const getUserById = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.query;
         const user = await User.findById(id);
         if (!user) return res.status(404).json({ msg: "User not found" });
         res.status(200).json(user);
