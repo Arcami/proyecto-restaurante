@@ -1,10 +1,9 @@
-import axios from 'axios';
 
 export default function menuItem(name, picture, ingredients, price){
 
     return(
         <div className="menuItem">
-            <img>{picture}</img>
+            <img alt='foto'>{picture}</img>
             <div className="textContent">
                 <div className="contentHead">
                     <p>{name}</p>
