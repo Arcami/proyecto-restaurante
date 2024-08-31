@@ -1,4 +1,4 @@
-import logo from '../public/assets/images/logo_1.svg';
+import logo from '../../images/logo_1.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, { useState } from 'react';
