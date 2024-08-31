@@ -16,18 +16,43 @@ const ProtectedRoute = ({ children }) => {
 const AppRoutes = () => {
   return (
     <Router>
-      {localStorage.getItem('authToken') && <Navbar />} {/* Mostrar el Navbar solo si el usuario está autenticado */}
       <Routes>
+        {/* Rutas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
-        {/* Rutas protegidas */}
-        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
+
+        {/* Rutas protegidas con Navbar */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/review"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Review />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
 };
 
 export default AppRoutes;
+
