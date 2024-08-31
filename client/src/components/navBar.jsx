@@ -15,7 +15,7 @@ const Navbar = () => {
 
     const getRestaurantByName = async (name) => {
         try {
-            const response = await fetch(`http://localhost:3001/restaurants/search?name=${encodeURIComponent(name)}`, {
+            const response = await fetch(`http://localhost:3001/restaurants/search`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -28,10 +28,10 @@ const Navbar = () => {
 
             const data = await response.json();
             setRestaurant(data);
-            setError(null);  // Limpiar el error si la solicitud es exitosa
+            setError(null); 
         } catch (error) {
             setError(error.message);
-            setRestaurant(null);  // Limpiar el resultado si hay un error
+            setRestaurant(null); 
             console.error('Error fetching restaurant data:', error);
         }
     };
@@ -39,7 +39,7 @@ const Navbar = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         if (query) {
-            getRestaurantByName(query);  // Llama a la función con el nombre del restaurante
+            getRestaurantByName(query);  
         }
     };
 

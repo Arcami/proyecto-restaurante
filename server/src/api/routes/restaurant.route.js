@@ -11,7 +11,8 @@ router.get('/all', getAllRestaurants);
 // Ruta para obtener un restaurante por id
 router.get('/', getRestaurantById);
 
-//Ruta para obtener restaurante por nombre
-router.get('/search', getRestaurantById);
+//Ruta para obtener restaurante porID
+router.get('/search', getRestaurantByName);
+
 
 module.exports = router;

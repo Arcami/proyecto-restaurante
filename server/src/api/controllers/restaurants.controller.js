@@ -60,7 +60,7 @@ const getRestaurantById = async (req, res) => {
 const getRestaurantByName = async (req, res) => {
     try {
         const { name } = req.query;
-        const restaurant = await Restaurant.findById(id);
+        const restaurant = await Restaurant.findOne(name);
         if (!restaurant) {
             return res.status(404).json({ message: "Restaurante no encontrado" });
         }
