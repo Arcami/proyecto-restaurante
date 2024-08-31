@@ -1,4 +1,10 @@
 const mongoose = require("mongoose");
+const { user, userIds } = require('../data/data.user.js');
+const users = require("../api/models/user.model.js");
+const { restaurante } = require("../data/data.restaurante.js")
+const restaurants = require("../api/models/restaurant.model.js")
+const { menu } = require("../data/data.menu.js")
+const Menu = require("../api/models/menu.model.js")
 
 const connectDB = async () => {
   try {
@@ -10,6 +16,8 @@ const connectDB = async () => {
     console.log(
       `Conectado a la base de datos "${name}" en el servidor "${host}".`
     );
+
+
   } catch (error) {
     console.log(error);
   }
