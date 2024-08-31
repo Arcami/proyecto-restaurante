@@ -31,6 +31,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Imprime el stack trace en la consola
+  res.status(500).json({ message: 'An internal server error occurred', error: err.message });
+});
 
 connectDB()
 
