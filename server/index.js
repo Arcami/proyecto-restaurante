@@ -14,7 +14,7 @@ const restaurantRoutes = require('./src/api/routes/restaurant.route.js');
 const menuRoutes = require('./src/api/routes/menu.route.js');
 const userRoutes = require('./src/api/routes/user.route.js');
 const homeRoutes = require('./src/api/routes/home.route.js');
-const reservationRoutes = require('./src/api/routes/Reservation.route.js');
+const reservationRoutes = require('./src/api/routes/reservation.route.js');
 const reviewRoutes = require('./src/api/routes/review.route.js');
 
 
