@@ -1,17 +1,17 @@
 import React from 'react';
-import Navbar from './components/navBar';// Importa el componente Navbar
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from '../src/components/templates/Login';
+import Register from '../src/components/templates/Register';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Navbar />
-      {/* Otros componentes o contenido que quieras incluir */}
-      <div className="container">
-
-        {/* Agrega más contenido aquí */}
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
