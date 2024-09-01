@@ -70,9 +70,23 @@ const getRestaurantByName = async (req, res) => {
     }
 };
 
+const getRestaurantsByCategory = async (req, res) => {
+    try {
+        const { category } = req.query;
+        const restaurant = await Restaurant.find({category: category});
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurantes no encontrados" });
+        }
+        res.status(200).json({ restaurant });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     authRestaurant,
     getRestaurantById,
     getRestaurantByName,
+    getRestaurantsByCategory,
     getAllRestaurants
 };
