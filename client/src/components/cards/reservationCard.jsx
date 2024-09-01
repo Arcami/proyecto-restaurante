@@ -21,7 +21,7 @@ const ReservationCard = ({ reservation }) => {
           <strong>Número de Invitados:</strong> {numberOfGuests}
         </p>
         <p className="card-text">
-          <strong>Total a Pagar:</strong> ${totalAmount.toFixed(2)}
+          <strong>Total a Pagar:</strong> €{totalAmount.toFixed(2)}
         </p>
         <p className="card-text">
           <strong>Estado:</strong>{" "}
@@ -38,11 +38,11 @@ const ReservationCard = ({ reservation }) => {
 // Función para asignar color según el estado
 const getStatusColor = (status) => {
   switch (status) {
-    case "confirmed":
+    case "confirmada":
       return "success";
-    case "pending":
+    case "pendiente":
       return "warning";
-    case "cancelled":
+    case "cancelada":
       return "danger";
     default:
       return "secondary";
