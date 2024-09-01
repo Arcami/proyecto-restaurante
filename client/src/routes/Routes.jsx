@@ -5,7 +5,7 @@ import Profile from '../pages/Profile';
 import Login from '../components/templates/Login';
 import Register from '../components/templates/Register';
 import Review from '../components/templates/Review';
-import Navbar from '../components/templates/navBar'; 
+import Navbar from '../components/templates/navBar';
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = !!localStorage.getItem('authToken'); // Verifica si el token de autenticación existe

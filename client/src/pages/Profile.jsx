@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserCard from '../components/cards/userCard';
-import RestaurantCard from '../components/cards/restauranteCard'; 
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import RestaurantCard from '../components/cards/restauranteCard';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { IoSearchOutline } from 'react-icons/io5';
 
 
@@ -18,7 +18,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         // Fetch user data
-        const userResponse = await fetch('http://localhost:3001/profile');
+        const userResponse = await fetch('http://localhost:3001/users/profile');
         if (!userResponse.ok) throw new Error('Error fetching user data');
         const userData = await userResponse.json();
         setUser(userData);
@@ -53,10 +53,10 @@ const Profile = () => {
 
       const data = await response.json();
       setRestaurant(data);
-      setError(null); 
+      setError(null);
     } catch (error) {
       setError(error.message);
-      setRestaurant(null); 
+      setRestaurant(null);
       console.error('Error fetching restaurant data:', error);
     }
   };
@@ -64,7 +64,7 @@ const Profile = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (query) {
-      getRestaurantByName(query);  
+      getRestaurantByName(query);
     }
   };
 
@@ -87,7 +87,7 @@ const Profile = () => {
               placeholder="Search restaurants..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              style={{ borderRadius: '0.375rem' }} 
+              style={{ borderRadius: '0.375rem' }}
             />
             <button
               type="submit"
@@ -113,7 +113,7 @@ const Profile = () => {
               <p>Picture: {restaurant.picture}</p>
               <p>Address: {restaurant.address}</p>
               <p>Category: {restaurant.category}</p>
-            
+
             </div>
           )}
         </div>
