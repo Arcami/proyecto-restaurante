@@ -1,5 +1,5 @@
 import React from "react";
-import ReviewCard from "../components/templates/Review.jsx"; // Asegúrate de que la ruta sea correcta
+import ReviewCard from "../components/cards/reviewCard.jsx"; // Asegúrate de que la ruta sea correcta
 
 // Simulación de los datos de una reseña
 const review = {
