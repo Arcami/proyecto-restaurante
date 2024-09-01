@@ -10,6 +10,6 @@ router.post('/register', registerUser);
 router.post('/login', login);
 
 // Ruta para obtener un usuario por ID (ejemplo)
-router.get('/profile', getUserById);
+router.get('/profile/:id', getUserById);
 
 module.exports = router;

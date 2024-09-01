@@ -6,7 +6,6 @@ const authRestaurant = async (req, res) => {
     try {
         const {
             name,
-            owner,
             address,
             picture,
             category,
@@ -18,7 +17,6 @@ const authRestaurant = async (req, res) => {
 
         const newRestaurant = new Restaurant({
             name,
-            owner,
             address,
             picture,
             category,
@@ -37,7 +35,6 @@ const authRestaurant = async (req, res) => {
 const getAllRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
-
         res.status(200).json(restaurants);
     } catch (err) {
         res.status(500).json({ error: err.message });

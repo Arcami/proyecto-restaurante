@@ -12,7 +12,7 @@ const RestaurantCard = ({ name, picture, address, category, id }) => {
         <p className="card-text">{address}</p>
         <p className="card-text"><small className="text-muted">{category}</small></p>
         <button onClick={() => {
-          navigate('/restaurant/'+id)
+          navigate('/restaurant', {state:{restaurantId: id}})
         }
            }>Visitar</button>
       </div>

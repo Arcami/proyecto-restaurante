@@ -3,7 +3,7 @@ import RestaurantList from '../components/templates/RestaurantList'
 
 export default function Home() {
   return (
-    <div>home<RestaurantList></RestaurantList></div>
+    <div><RestaurantList></RestaurantList></div>
 
   )
 }
