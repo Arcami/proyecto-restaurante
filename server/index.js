@@ -6,15 +6,14 @@ const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const { connectDB } = require('./src/utils/db.js')
-
+const { connectDB } = require('./src/utils/db.js');
 
 // Rutas
 const restaurantRoutes = require('./src/api/routes/restaurant.route.js');
 const menuRoutes = require('./src/api/routes/menu.route.js');
 const userRoutes = require('./src/api/routes/user.route.js');
 const homeRoutes = require('./src/api/routes/home.route.js');
-const reservationRoutes = require('./src/api/routes/Reservation.route.js');
+const reservationRoutes = require('./src/api/routes/reservation.route.js');
 const reviewRoutes = require('./src/api/routes/review.route.js');
 
 
@@ -31,6 +30,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Imprime el stack trace en la consola
+  res.status(500).json({ message: 'An internal server error occurred', error: err.message });
+});
 
 connectDB()
 
