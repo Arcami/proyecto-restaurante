@@ -59,6 +59,17 @@ const getUserReservations = async (req, res) => {
     }
 };
 
+const getUserRestaurantReservations = async (req, res) => {
+    try {
+        const { userId, restaurantId } = req.query;
+        const reservations = await Reservation.find({ userId, restaurantId });
+        res.status(200).json(reservations);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+
+};
+
 
 const getRestaurantReservations = async (req, res) => {
     try {
@@ -93,6 +104,7 @@ module.exports = {
     getUserReservations,
     getRestaurantReservations,
     deleteReservation,
+    getUserRestaurantReservations,
     editReservation
 };
 

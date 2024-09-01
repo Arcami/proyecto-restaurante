@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard from '../cards/restauranteCard';
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -36,11 +36,21 @@ const RestaurantList = () => {
   return (
     <div className="container">
       <div className="row">
-        {restaurants.map(restaurant => (
-          <div className="col-md-4" key={restaurant._id}>
-            <RestaurantCard restaurant={restaurant} />
-          </div>
-        ))}
+        {restaurants.map(restaurant => {
+          return <div className="col-md-4" key={restaurant._id}>
+          <RestaurantCard
+          name = {restaurant.name}
+          picture = {restaurant.picture}
+          address = {restaurant.address}
+          category = {restaurant.category}
+          id = {restaurant._id}
+          >
+
+          </RestaurantCard>
+        </div>
+        })}
+          
+        
       </div>
     </div>
   );

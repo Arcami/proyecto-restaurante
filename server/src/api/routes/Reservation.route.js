@@ -4,6 +4,7 @@ const {
     getUserReservations,
     deleteReservation,
     getRestaurantReservations,
+    getUserRestaurantReservations,
     editReservation
 } = require('../controllers/reservation.controller');
 
@@ -16,6 +17,8 @@ router.post('/create', createReservation);
 router.get('/user', getUserReservations);
 
 router.get('/restaurant', getRestaurantReservations);
+
+router.get('/restaurant/user', getUserRestaurantReservations);
 
 router.put('/edit', editReservation);
 
