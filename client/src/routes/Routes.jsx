@@ -10,29 +10,26 @@ import NavBar from "../components/templates/navBar.jsx";
 import Footer from "../components/templates/Footer.jsx";
 import RestaurantList from "../components/templates/RestaurantList.jsx";
 import RestaurantCard from "../components/cards/restaurantCard.jsx";
+import ThemeProvider from "../context/ThemeContext";
 
 const App = () => {
   return (
     <Router>
-      {/* Navbar se mostrará en todas las rutas */}
-      <NavBar />
-
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/review" element={<Review />} />
-        <Route path="RestaurantList" element={<RestaurantList />} />
-        <Route path="/reservationcard" element={<ReservationCard />} />
-        <Route path="/reviewFront" element={<ReviewFront />} />
-        <Route path="/restaurantcard" element={<RestaurantCard />} />
-      </Routes>
-
-      {/* Footer se mostrará en todas las rutas */}
-      <Footer />
+      <ThemeProvider>
+        <NavBar />
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/restaurantlist" element={<RestaurantList />} />
+          <Route path="/reservationcard" element={<ReservationCard />} />
+          <Route path="/reviewfront" element={<ReviewFront />} />
+          <Route path="/restaurantcard" element={<RestaurantCard />} />
+        </Routes>
+        <Footer />
+      </ThemeProvider>
     </Router>
   );
 };
-
-export default App;

@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import UserCard from '../components/cards/userCard';
-import RestaurantCard from '../components/cards/restaurantCard';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { IoSearchOutline } from 'react-icons/io5';
-
-
+import React, { useState, useEffect } from "react";
+import UserCard from "../components/cards/userCard";
+import RestaurantCard from "../components/cards/restaurantCard";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { IoSearchOutline } from "react-icons/io5";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [restaurant, setRestaurant] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch user data
-        const userResponse = await fetch('http://localhost:3001/users/profile');
-        if (!userResponse.ok) throw new Error('Error fetching user data');
+        const userResponse = await fetch("http://localhost:3001/users/profile");
+        if (!userResponse.ok) throw new Error("Error fetching user data");
         const userData = await userResponse.json();
         setUser(userData);
 
         // Fetch restaurants data
-        const restaurantsResponse = await fetch('http://localhost:3001/restaurants');
-        if (!restaurantsResponse.ok) throw new Error('Error fetching restaurants data');
+        const restaurantsResponse = await fetch(
+          "http://localhost:3001/restaurants"
+        );
+        if (!restaurantsResponse.ok)
+          throw new Error("Error fetching restaurants data");
         const restaurantsData = await restaurantsResponse.json();
         setRestaurants(restaurantsData);
       } catch (error) {
@@ -40,12 +41,15 @@ const Profile = () => {
 
   const getRestaurantByName = async (name) => {
     try {
-      const response = await fetch(`http://localhost:3001/restaurants/search?name=${name}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3001/restaurants/search?name=${name}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -57,7 +61,7 @@ const Profile = () => {
     } catch (error) {
       setError(error.message);
       setRestaurant(null);
-      console.error('Error fetching restaurant data:', error);
+      console.error("Error fetching restaurant data:", error);
     }
   };
 
@@ -68,8 +72,18 @@ const Profile = () => {
     }
   };
 
-  if (loading) return <div className="container mt-5"><p>Loading...</p></div>;
-  if (error) return <div className="container mt-5"><p>Error: {error}</p></div>;
+  if (loading)
+    return (
+      <div className="container mt-5">
+        <p>Loading...</p>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="container mt-5">
+        <p>Error: {error}</p>
+      </div>
+    );
 
   return (
     <div className="container mt-5">
@@ -87,7 +101,7 @@ const Profile = () => {
               placeholder="Search restaurants..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              style={{ borderRadius: '0.375rem' }}
+              style={{ borderRadius: "0.375rem" }}
             />
             <button
               type="submit"
@@ -113,7 +127,6 @@ const Profile = () => {
               <p>Picture: {restaurant.picture}</p>
               <p>Address: {restaurant.address}</p>
               <p>Category: {restaurant.category}</p>
-
             </div>
           )}
         </div>
@@ -124,7 +137,10 @@ const Profile = () => {
             {restaurants.length > 0 ? (
               restaurants.map((restaurant) => (
                 <div className="col-md-4 mb-4" key={restaurant.id}>
-                  <RestaurantCard name={restaurant.name} image={restaurant.image} />
+                  <RestaurantCard
+                    name={restaurant.name}
+                    image={restaurant.image}
+                  />
                 </div>
               ))
             ) : (
