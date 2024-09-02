@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard from '../cards/restaurantCard';
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -20,9 +20,9 @@ const RestaurantList = () => {
         }
 
         const data = await response.json();
-        setRestaurants(data); 
+        setRestaurants(data);
       } catch (err) {
-        setError(err.message); 
+        setError(err.message);
       }
     };
 
@@ -30,7 +30,7 @@ const RestaurantList = () => {
   }, []);
 
   if (error) {
-    return <div>Error: {error}</div>; 
+    return <div>Error: {error}</div>;
   }
 
   return (
