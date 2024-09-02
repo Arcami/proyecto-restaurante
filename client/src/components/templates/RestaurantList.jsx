@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import RestaurantCard from '../cards/restauranteCard';
+import React, { useState, useEffect } from "react";
+import RestaurantCard from "../cards/restaurantCard";
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -8,10 +8,10 @@ const RestaurantList = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await fetch('http://localhost:3001/restaurants/all', {
-          method: 'GET',
+        const response = await fetch("http://localhost:3001/restaurants/all", {
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
 
@@ -20,9 +20,9 @@ const RestaurantList = () => {
         }
 
         const data = await response.json();
-        setRestaurants(data); 
+        setRestaurants(data);
       } catch (err) {
-        setError(err.message); 
+        setError(err.message);
       }
     };
 
@@ -30,27 +30,25 @@ const RestaurantList = () => {
   }, []);
 
   if (error) {
-    return <div>Error: {error}</div>; 
+    return <div>Error: {error}</div>;
   }
 
   return (
     <div className="container">
       <div className="row">
-        {restaurants.map(restaurant => {
-          return <div className="col-md-4" key={restaurant._id}>
-          <RestaurantCard
-          name = {restaurant.name}
-          picture = {restaurant.picture}
-          address = {restaurant.address}
-          category = {restaurant.category}
-          id = {restaurant._id}
-          >
-
-          </RestaurantCard>
-        </div>
+        {restaurants.map((restaurant) => {
+          return (
+            <div className="col-md-4" key={restaurant._id}>
+              <RestaurantCard
+                name={restaurant.name}
+                picture={restaurant.picture}
+                address={restaurant.address}
+                category={restaurant.category}
+                id={restaurant._id}
+              ></RestaurantCard>
+            </div>
+          );
         })}
-          
-        
       </div>
     </div>
   );
