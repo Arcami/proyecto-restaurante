@@ -23,28 +23,27 @@ const Login = () => {
         body: JSON.stringify({ username, password }),
       });
 
-      if (!response.ok) {
-        const result = await response.json();
-        setError(
-          result.message || "Login failed. Please check your credentials."
-        );
-      } else {
-        const result = await response.json();
-        const { token } = result;
 
-        // Guarda el token en localStorage
-        localStorage.setItem("token", token);
+            const data = await response.json();
 
-        alert("Login successful!");
-        navigate("/home");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      setError("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+            if (!response.ok) {
+                // La respuesta no es OK, intenta analizar el error
+                setError(data.message || 'Login failed. Please check your credentials.');
+            } else {
+                // La respuesta es OK, redirige al usuario
+                alert('Login successful!');
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userId', data.user._id);
+                navigate('/'); // Redirige a la página /home tras el inicio de sesión
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            setError('An error occurred. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
   return (
     <Container style={{ width: "300px", margin: "0 auto", padding: "20px" }}>

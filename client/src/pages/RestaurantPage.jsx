@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import RestaurantCard from '../components/cards/restauranteCard';
+import RestaurantCard from '../components/cards/restaurantCard';
 import {useLocation} from 'react-router-dom';
 import RestaurantMenu from '../components/templates/restaurantMenu';
 import RestaurantUserReservations from '../components/templates/restaurantUserReservations';

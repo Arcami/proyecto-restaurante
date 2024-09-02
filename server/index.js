@@ -7,6 +7,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { connectDB } = require('./src/utils/db.js');
+const audit = require ('express-requests-logger');
 
 // Rutas
 const restaurantRoutes = require('./src/api/routes/restaurant.route.js');
@@ -22,6 +23,7 @@ dotenv.config();
 const app = express();
 
 // Seguridad
+app.use(audit());
 app.use(helmet());
 app.use(cors());
 

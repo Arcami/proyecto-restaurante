@@ -10,6 +10,7 @@ import NavBar from "../components/templates/navBar.jsx";
 import Footer from "../components/templates/Footer.jsx";
 import RestaurantList from "../components/templates/RestaurantList.jsx";
 import RestaurantCard from "../components/cards/restaurantCard.jsx";
+import RestaurantPage from "../pages/RestaurantPage.jsx";
 import ThemeProvider from "../context/ThemeContext";
 import Profile from "../pages/Profile.jsx";
 
@@ -28,6 +29,7 @@ const AppRoutes = () => {
           <Route path="/reservationcard" element={<ReservationCard />} />
           <Route path="/reviewfront" element={<ReviewFront />} />
           <Route path="/restaurantcard" element={<RestaurantCard />} />
+          <Route path="/restaurant" element={<RestaurantPage />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
