@@ -1,49 +1,52 @@
-import { React, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import RestaurantMenu from '../components/templates/restaurantMenu';
+import React, { useState, useEffect } from 'react';
 import RestaurantCard from '../components/cards/restauranteCard';
+import {useLocation} from 'react-router-dom';
+import RestaurantMenu from '../components/templates/restaurantMenu';
+import RestaurantUserReservations from '../components/templates/restaurantUserReservations';
+import ReviewsList from '../components/templates/restaurantReviews';
 
 
+const RestaurantList = () => {
+  const [restaurant, setRestaurant] = useState({'restaurant':{}});
+  const [error, setError] = useState(null);
+  const location = useLocation();
+  const id = location.state.restaurantId;
+  console.log(id)
 
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        fetch('http://localhost:3001/restaurants/?id='+id, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setRestaurant(data);
+        })
 
- const RestaurantPage = () => {
-    const location = useLocation();
-    const [restaurant, setRestaurant] = useState([]);
-    const [error, setError] = useState(null);
-    const id = location.state.restaurantId
+      } catch (err) {
+        setError(err.message); 
+      }
+    };
 
+    fetchRestaurants();
+  }, [id]);
 
-    useEffect(() => {
-        const fetchRestaurant = async () => {
-          try {
-            const response = await fetch('http://localhost:3001/restaurants/?id='+id, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-    
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-    
-            const data = await response.json();
-            setRestaurant(data); 
-          } catch (err) {
-            setError(err.message); 
-          }
-        };
-    
-        fetchRestaurant();
-      }, [id]);
+  if (error) {
+    return <div>Error: {error}</div>; 
+  }
 
-    if (error) {
-        return <div>Error: {error}</div>; 
-    }
-
-    return (
-        <div>
-            <RestaurantCard
+  return (
+    <div className="container">
+      <div className="row">
+          <div className="col-md-4" key={restaurant.restaurant._id}>
+          <RestaurantCard
           name = {restaurant.restaurant.name}
           picture = {restaurant.restaurant.picture}
           address = {restaurant.restaurant.address}
@@ -52,10 +55,16 @@ import RestaurantCard from '../components/cards/restauranteCard';
           >
 
           </RestaurantCard>
-            <RestaurantMenu id={id}/>
+          <RestaurantMenu id = {id}/>
+          <RestaurantUserReservations/>
+          <ReviewsList/>
         </div>
+        
+          
+        
+      </div>
+    </div>
+  );
+};
 
-  )
-}
-
-export default RestaurantPage;
+export default RestaurantList;

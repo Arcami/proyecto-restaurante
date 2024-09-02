@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react"
 import ReservationCard from "../cards/reservationCard"
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
 
-export default function UserRestaurantReservations({user, restaurant}){
-    const navigate = useNavigate();
-    const [ restaurant, setRestaurant ] = useState (restaurant);
-    const [ user, setUser ] = useState (user);
+const RestaurantUserReservations = () => {
+  const [data, setData] = useState([]);
+    const location = useLocation();
+    const restaurantId = location.state.restaurantId
+    const userId = localStorage.getItem('userId');
     useEffect(() => {
         const token = localStorage.getItem('token')
-        fetch('http://localhost:3001/reservations/restaurant/user', {
+        fetch(`http://localhost:3001/reservations/restaurant/user?userId=${userId}&restaurantId=${restaurantId}`, {
         method: 'GET',
           headers: {
             'Authorization': token,
@@ -22,25 +23,27 @@ export default function UserRestaurantReservations({user, restaurant}){
         .then(json => setData(json))
     },
     
-   [])
-   console.log(data);
+   [userId, restaurantId])
     return (
         <div className="mainContainer">
           
-              <ul className="getAllUl"> {data.map((dataEntry) => {
-                return <li><Task
-                      title={dataEntry.title}
-                      project={dataEntry.project}
-                      category={dataEntry.category}
+               {data.map((dataEntry) => {
+                return ( 
+                <div className="card mb-3 shadow-sm" key={dataEntry._id}>
+                  <ReservationCard
+                      contactInfo={dataEntry.contactInfo}
+                      numberOfGuests={dataEntry.numberOfGuests}
+                      totalAmount={dataEntry.totalAmount}
                       status={dataEntry.status}
-                      _id={dataEntry._id}
                   >
 
-            </Task></li> 
-            
-            }
+            </ReservationCard>
+            </div>
+               )}
     
-              )}</ul>
+              )}
         </div>)
 
 }
+
+export default RestaurantUserReservations;

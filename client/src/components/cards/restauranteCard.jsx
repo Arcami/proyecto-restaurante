@@ -3,6 +3,7 @@ import React from 'react';
 
 const RestaurantCard = ({ name, picture, address, category, id }) => {
   const navigate = useNavigate();
+  
 
   return (
     <div className="card" style={{ width: '18rem' }}>
