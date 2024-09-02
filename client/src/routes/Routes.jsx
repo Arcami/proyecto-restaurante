@@ -11,8 +11,9 @@ import Footer from "../components/templates/Footer.jsx";
 import RestaurantList from "../components/templates/RestaurantList.jsx";
 import RestaurantCard from "../components/cards/restaurantCard.jsx";
 import ThemeProvider from "../context/ThemeContext";
+import Profile from "../pages/Profile.jsx";
 
-const App = () => {
+const AppRoutes = () => {
   return (
     <Router>
       <ThemeProvider>
@@ -27,9 +28,12 @@ const App = () => {
           <Route path="/reservationcard" element={<ReservationCard />} />
           <Route path="/reviewfront" element={<ReviewFront />} />
           <Route path="/restaurantcard" element={<RestaurantCard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
       </ThemeProvider>
     </Router>
   );
 };
+
+export default AppRoutes;
