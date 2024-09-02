@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserCard from '../components/cards/userCard';
-import RestaurantCard from '../components/cards/restauranteCard';
+import RestaurantCard from '../components/cards/restaurantCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { IoSearchOutline } from 'react-icons/io5';
 
