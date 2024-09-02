@@ -1,17 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Home from '../pages/Home';
-import Profile from '../pages/Profile';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from '../components/templates/Login';
 import Register from '../components/templates/Register';
-import Review from '../components/cards/reviewCard';
+import Home from '../pages/Home';
+import Profile from '../pages/Profile';
+import Review from '../pages/reviewPage';
 import Navbar from '../components/templates/navBar';
-
-const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = !!localStorage.getItem('authToken'); // Verifica si el token de autenticación existe
-
-  return isAuthenticated ? children : <Navigate to="/login" />;
-};
 
 const AppRoutes = () => {
   return (
@@ -21,32 +15,32 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Rutas protegidas con Navbar */}
+        {/* Rutas privadas */}
         <Route
           path="/"
           element={
-            <ProtectedRoute>
+            <>
               <Navbar />
               <Home />
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <>
               <Navbar />
               <Profile />
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
           path="/review"
           element={
-            <ProtectedRoute>
+            <>
               <Navbar />
               <Review />
-            </ProtectedRoute>
+            </>
           }
         />
       </Routes>

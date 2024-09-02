@@ -36,11 +36,21 @@ const RestaurantList = () => {
     return (
         <div className="container">
             <div className="row">
-                {restaurants.map(restaurant => (
-                    <div className="col-md-4" key={restaurant._id}>
-                        <RestaurantCard restaurant={restaurant} />
+                {restaurants.map(restaurant => {
+                    return <div className="col-md-4" key={restaurant._id}>
+                        <RestaurantCard
+                            name={restaurant.name}
+                            picture={restaurant.picture}
+                            address={restaurant.address}
+                            category={restaurant.category}
+                            id={restaurant._id}
+                        >
+
+                        </RestaurantCard>
                     </div>
-                ))}
+                })}
+
+
             </div>
         </div>
     );
