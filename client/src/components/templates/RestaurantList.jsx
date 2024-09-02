@@ -1,33 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import RestaurantCard from '../cards/restaurantCard';
 
-const RestaurantList = () => {
-  const [restaurants, setRestaurants] = useState([]);
+const RestaurantList = ({ restaurants }) => {
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/restaurants/all', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setRestaurants(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    fetchRestaurants();
-  }, []);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -36,11 +11,19 @@ const RestaurantList = () => {
   return (
     <div className="container">
       <div className="row">
-        {restaurants.map(restaurant => (
-          <div className="col-md-4" key={restaurant._id}>
-            <RestaurantCard restaurant={restaurant} />
-          </div>
-        ))}
+        {restaurants ? restaurants.map((restaurant) => {
+          return (
+            <div className="col-md-4" key={restaurant._id}>
+              <RestaurantCard
+                name={restaurant.name}
+                picture={restaurant.picture}
+                address={restaurant.address}
+                category={restaurant.category}
+                id={restaurant._id}
+              ></RestaurantCard>
+            </div>
+          );
+        }) : null}
       </div>
     </div>
   );

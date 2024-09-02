@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RestaurantList from '../components/templates/RestaurantList';
 import { IoSearchOutline } from 'react-icons/io5';
 
 const Home = () => {
   const [query, setQuery] = useState('');  // Variable para manejar la búsqueda
-  const [restaurant, setRestaurant] = useState(null);  // Estado para los resultados de la búsqueda
+  const [restaurants, setRestaurants] = useState(null);  // Estado para los resultados de la búsqueda
   const [error, setError] = useState(null);  // Estado para manejar errores
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/restaurants/all", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setRestaurants(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
 
   const getRestaurantByName = async (name) => {
     try {
-      const response = await fetch(`http://localhost:3001/restaurants/search`, {
+      const response = await fetch(`http://localhost:3001/restaurants/search?name=${name}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -21,12 +45,12 @@ const Home = () => {
       }
 
       const data = await response.json();
-      setRestaurant(data);
+      setRestaurants(data);
       setError(null);
     } catch (error) {
       setError(error.message);
-      setRestaurant(null);
-      console.error('Error fetching restaurant data:', error);
+      setRestaurants(null);
+      console.error('Error fetching restaurants data:', error);
     }
   };
 
@@ -61,7 +85,7 @@ const Home = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* Lista de restaurantes */}
-      <RestaurantList restaurants={restaurant} />
+      <RestaurantList error={error} restaurants={restaurants} />
 
     </div>
 

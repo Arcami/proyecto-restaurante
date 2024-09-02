@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const ReservationCard = ({ reservation }) => {
+const restaurantReservationCards = (reservation) => {
   const {
     contactInfo: { guestName, phone },
     date,
@@ -9,7 +9,6 @@ const ReservationCard = ({ reservation }) => {
     totalAmount,
     status,
   } = reservation;
-
   return (
     <div className="card mb-3 shadow-sm">
       <div className="card-body">
@@ -49,4 +48,4 @@ const getStatusColor = (status) => {
   }
 };
 
-export default ReservationCard;
+export default restaurantReservationCards;

@@ -10,29 +10,34 @@ import NavBar from "../components/templates/navBar.jsx";
 import Footer from "../components/templates/Footer.jsx";
 import RestaurantList from "../components/templates/RestaurantList.jsx";
 import RestaurantCard from "../components/cards/restaurantCard.jsx";
+import RestaurantPage from "../pages/RestaurantPage.jsx";
+import ThemeProvider from "../context/ThemeContext";
+import Profile from "../pages/Profile.jsx";
+import ReservationForm from "../pages/ReservationForm.jsx";
 
-const App = () => {
+const AppRoutes = () => {
   return (
     <Router>
-      {/* Navbar se mostrará en todas las rutas */}
-      <NavBar />
-
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/review" element={<Review />} />
-        <Route path="RestaurantList" element={<RestaurantList />} />
-        <Route path="/reservationcard" element={<ReservationCard />} />
-        <Route path="/reviewFront" element={<ReviewFront />} />
-        <Route path="/restaurantcard" element={<RestaurantCard />} />
-      </Routes>
-
-      {/* Footer se mostrará en todas las rutas */}
-      <Footer />
+      <ThemeProvider>
+        <NavBar />
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/restaurantlist" element={<RestaurantList />} />
+          <Route path="/reservationcard" element={<ReservationCard />} />
+          <Route path="/reviewfront" element={<ReviewFront />} />
+          <Route path="/restaurantcard" element={<RestaurantCard />} />
+          <Route path="/restaurant" element={<RestaurantPage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/reservations/:id?" element={<ReservationForm />} />{" "}
+        </Routes>
+        <Footer />
+      </ThemeProvider>
     </Router>
   );
 };
 
-export default App;
+export default AppRoutes;
