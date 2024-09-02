@@ -12,6 +12,7 @@ import RestaurantList from "../components/templates/RestaurantList.jsx";
 import RestaurantCard from "../components/cards/restaurantCard.jsx";
 import ThemeProvider from "../context/ThemeContext";
 import Profile from "../pages/Profile.jsx";
+import ReservationForm from "../pages/ReservationForm.jsx";
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const AppRoutes = () => {
           <Route path="/reviewfront" element={<ReviewFront />} />
           <Route path="/restaurantcard" element={<RestaurantCard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/reservations/:id?" element={<ReservationForm />} />{" "}
         </Routes>
         <Footer />
       </ThemeProvider>
