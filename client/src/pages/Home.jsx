@@ -1,9 +1,13 @@
-import React from 'react'
-import RestaurantList from '../components/templates/RestaurantList'
+import React from "react";
+import RestaurantList from "../components/templates/RestaurantList";
 
-export default function Home() {
+const Home = () => {
   return (
-    <div>home<RestaurantList></RestaurantList></div>
+    <div>
+      <h1>Bienvenido a la página de inicio</h1>
+      <RestaurantList />
+    </div>
+  );
+};
 
-  )
-}
+export default Home;
