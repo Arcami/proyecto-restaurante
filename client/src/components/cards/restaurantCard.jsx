@@ -4,6 +4,7 @@ import React from 'react';
 const RestaurantCard = ({ name, picture, address, category, id }) => {
   const navigate = useNavigate();
 
+
   return (
     <div className="card" style={{ width: '18rem' }}>
       <img src={picture} className="card-img-top" alt={name} />
@@ -12,9 +13,17 @@ const RestaurantCard = ({ name, picture, address, category, id }) => {
         <p className="card-text">{address}</p>
         <p className="card-text"><small className="text-muted">{category}</small></p>
         <button onClick={() => {
-          navigate('/restaurant/'+id)
+          navigate('/restaurant', { state: { restaurantId: id } })
         }
-           }>Visitar</button>
+        }
+        >Visitar</button>
+        <button
+          onClick={() => {
+            navigate('/reservationform', { state: { restaurantId: id } });
+          }}
+        >
+          Reservar
+        </button>
       </div>
     </div>
   );

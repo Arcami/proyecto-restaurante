@@ -1,9 +1,10 @@
+import React from "react";
 
-export default function menuItem(name, picture, ingredients, price){
+const MenuItem = ({name, picture, ingredients, price}) => {
 
     return(
         <div className="menuItem">
-            <img alt='foto'>{picture}</img>
+            <img src={picture} className="card-img-top" alt={name} />
             <div className="textContent">
                 <div className="contentHead">
                     <p>{name}</p>
@@ -14,3 +15,5 @@ export default function menuItem(name, picture, ingredients, price){
         </div>
     )
 }
+
+export default MenuItem;

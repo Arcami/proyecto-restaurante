@@ -6,7 +6,6 @@ const authRestaurant = async (req, res) => {
     try {
         const {
             name,
-            owner,
             address,
             picture,
             category,
@@ -18,7 +17,6 @@ const authRestaurant = async (req, res) => {
 
         const newRestaurant = new Restaurant({
             name,
-            owner,
             address,
             picture,
             category,
@@ -37,7 +35,6 @@ const authRestaurant = async (req, res) => {
 const getAllRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
-
         res.status(200).json(restaurants);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -60,11 +57,11 @@ const getRestaurantById = async (req, res) => {
 const getRestaurantByName = async (req, res) => {
     try {
         const { name } = req.query;
-        const restaurant = await Restaurant.findOne({name: name});
+        const restaurant = await Restaurant.find({ name: new RegExp(name, "i") });
         if (!restaurant) {
             return res.status(404).json({ message: "Restaurante no encontrado" });
         }
-        res.status(200).json({ restaurant });
+        res.status(200).json(restaurant);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -73,7 +70,7 @@ const getRestaurantByName = async (req, res) => {
 const getRestaurantsByCategory = async (req, res) => {
     try {
         const { category } = req.query;
-        const restaurant = await Restaurant.find({category: category});
+        const restaurant = await Restaurant.find({ category: category });
         if (!restaurant) {
             return res.status(404).json({ message: "Restaurantes no encontrados" });
         }

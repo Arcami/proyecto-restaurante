@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = (review) => {
   const { userId, text, score, createdAt } = review;
 
   return (
