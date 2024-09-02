@@ -5,7 +5,8 @@ const User = require("../models/user.model");
 // Función para registrar un usuario
 const registerUser = async (req, res) => {
   try {
-    const { username, password, picture, role, reservations } = req.body;
+    const { username, password, role, reservations } = req.body;
+    const picture = req.file.path;
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ username });
