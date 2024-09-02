@@ -5,7 +5,7 @@ import Register from '../components/templates/Register';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import Review from '../pages/reviewPage';
-import Navbar from '../components/templates/navBar';
+import Navbar from '../components/templates/Navbar';
 
 const AppRoutes = () => {
   return (

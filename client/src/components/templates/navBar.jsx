@@ -1,109 +1,81 @@
 import logo from '../../images/logo_1.svg';
+import mobileLogo from '../../images/logo_2.svg'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import React, { useState } from 'react';
-import { IoSearchOutline } from 'react-icons/io5';
 import { FaRegUser } from 'react-icons/fa';
-import { FiShoppingCart } from 'react-icons/fi';
 import { HiOutlineLogout } from 'react-icons/hi';
+import { ThemeContext } from '../../context/ThemeContext';
+import { BiAdjust } from "react-icons/bi";
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Navbar = () => {
-    const [searchOpen, setSearchOpen] = useState(false);
-    const [query, setQuery] = useState('');
-    const [restaurant, setRestaurant] = useState(null);
-    const [error, setError] = useState(null);
 
-    const getRestaurantByName = async (name) => {
-        try {
-            const response = await fetch(`http://localhost:3001/restaurants/search`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+    const { theme, toggleTheme } = useContext(ThemeContext);
+    const navigate = useNavigate();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status} ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            setRestaurant(data);
-            setError(null); 
-        } catch (error) {
-            setError(error.message);
-            setRestaurant(null); 
-            console.error('Error fetching restaurant data:', error);
-        }
+    const handleLoginClick = () => {
+        navigate('/login'); // Redirigir a la página de login
     };
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (query) {
-            getRestaurantByName(query);  
-        }
+    const handleLogoutClick = () => {
+        // Aquí puedes agregar la lógica para cerrar sesión, como eliminar el token de autenticación
+        setIsAuthenticated(false);
+        navigate('/login'); // Redirige al usuario a la página de login después de cerrar sesión
     };
+    const handleLogoClick = () => {
+        navigate('/home'); // Redirige a la página de inicio
+    };
+
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className={`navbar navbar-expand-lg ${theme === 'light' ? 'navbar-light bg-light' : 'navbar-dark bg-dark'}`}>
             <div className="container-fluid">
-                {/* Logo en la parte izquierda */}
-                <div className="col-md-4 d-flex justify-content-start align-items-center">
-                    <img src={logo} alt="logo" height="30" />
-                </div>
 
-                {/* Barra de búsqueda en el centro */}
-                <div className="col-md-4 d-flex justify-content-center position-relative">
-                    <IoSearchOutline
-                        size={24}
-                        className="cursor-pointer"
-                        onClick={() => setSearchOpen(!searchOpen)}
+                <div className="d-flex justify-content-center justify-content-md-start align-items-center">
+                    <img
+                        src={mobileLogo}
+                        alt="logo"
+                        onClick={handleLogoClick}
+                        className="d-block d-md-none" // Mostrar solo en móvil
+                        height="30"
                     />
-                    {searchOpen && (
-                        <div className="position-absolute top-100 start-50 translate-middle-x mt-2 bg-white p-3 rounded shadow-lg">
-                            <form onSubmit={handleSearch}>
-                                <input
-                                    type="text"
-                                    placeholder="Buscar restaurantes..."
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    className="form-control mb-2"
-                                />
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary w-100"
-                                >
-                                    Buscar
-                                </button>
-                            </form>
-                            {restaurant && (
-                                <div className="mt-3">
-                                    <h3>Resultado de la búsqueda</h3>
-                                    <p>Owner: {restaurant.owner}</p>
-                                    <p>Picture: {restaurant.picture}</p>
-                                    <p>Address: {restaurant.address}</p>
-                                    <p>Category: {restaurant.category}</p>
-                                    {/* Muestra otros detalles según tu estructura de datos */}
-                                </div>
-                            )}
-                            {error && (
-                                <div className="mt-3 alert alert-danger">
-                                    <strong>Error:</strong> {error}
-                                </div>
-                            )}
-                        </div>
-                    )}
+                    <img
+                        src={logo}
+                        alt="logo"
+                        onClick={handleLogoClick}
+                        className="d-none d-md-block" // Mostrar solo en pantallas grandes
+                        height="30"
+                    />
                 </div>
-
-                {/* Usuario, carrito y logout a la derecha */}
                 <div className="col-md-4 d-flex justify-content-end align-items-center">
                     <div className="me-3">
-                        <FaRegUser size={24} />
-                    </div>
-                    <div className="me-3">
-                        <FiShoppingCart size={24} />
+                        {/* Agregar la función onClick para redirigir al hacer clic en el icono */}
+                        {isAuthenticated ? (
+                            <HiOutlineLogout
+                                size={24}
+                                style={{ color: theme === 'light' ? '#000' : '#fff', cursor: 'pointer' }}
+                                onClick={handleLogoutClick}
+                            />
+                        ) : (
+                            <FaRegUser
+                                size={24}
+                                style={{ color: theme === 'light' ? '#000' : '#fff', cursor: 'pointer' }}
+                                onClick={handleLoginClick}
+                            />
+                        )}
                     </div>
                     <div>
-                        <HiOutlineLogout size={24} />
+                        <BiAdjust size={24}
+                            onClick={toggleTheme}
+                            style={{
+                                cursor: 'pointer',
+                                backgroundColor: theme === 'light' ? '#fff' : '#333',
+                                color: theme === 'light' ? '#000' : '#fff',
+                            }} />
+
                     </div>
                 </div>
             </div>
