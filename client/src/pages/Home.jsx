@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import RestaurantList from '../components/templates/RestaurantList';
 import { IoSearchOutline } from 'react-icons/io5';
+import CategoryCardList from '../components/cards/CategoryCardList';
 
 const Home = () => {
-  const [query, setQuery] = useState('');  // Variable para manejar la búsqueda
-  const [restaurants, setRestaurants] = useState(null);  // Estado para los resultados de la búsqueda
-  const [error, setError] = useState(null);  // Estado para manejar errores
+  const [query, setQuery] = useState('');
+  const [restaurants, setRestaurants] = useState(null);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null); // Nuevo estado para mensajes específicos
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -31,6 +34,41 @@ const Home = () => {
     fetchRestaurants();
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory) {
+      const fetchRestaurantsByCategory = async () => {
+        try {
+          const response = await fetch(`http://localhost:3001/restaurants/category?category=${selectedCategory}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+          }
+
+          const data = await response.json();
+          if (data.message) {
+            setRestaurants(null); // Limpia la lista de restaurantes
+            setMessage(data.message); // Establece el mensaje
+          } else {
+            setRestaurants(data);
+            setMessage(null); // Limpia el mensaje
+          }
+          setError(null);
+        } catch (error) {
+          setError(error.message);
+          setRestaurants(null);
+          setMessage(null);
+        }
+      };
+
+      fetchRestaurantsByCategory();
+    }
+  }, [selectedCategory]);
+
   const getRestaurantByName = async (name) => {
     try {
       const response = await fetch(`http://localhost:3001/restaurants/search?name=${name}`, {
@@ -47,10 +85,11 @@ const Home = () => {
       const data = await response.json();
       setRestaurants(data);
       setError(null);
+      setMessage(null); // Limpia el mensaje
     } catch (error) {
       setError(error.message);
       setRestaurants(null);
-      console.error('Error fetching restaurants data:', error);
+      setMessage(null);
     }
   };
 
@@ -61,11 +100,14 @@ const Home = () => {
     }
   };
 
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div>
       <h1>Bienvenido a la página de inicio</h1>
-
-      {/* Barra de búsqueda */}
+      <CategoryCardList onCategorySelect={handleCategorySelect} />
       <form onSubmit={handleSearch}>
         <div className="input-group mb-3">
           <IoSearchOutline size={24} className="input-group-text cursor-pointer" />
@@ -80,15 +122,10 @@ const Home = () => {
           <button type="submit" className="btn btn-primary">Search</button>
         </div>
       </form>
-
-      {/* Mostrar errores si existen */}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {/* Lista de restaurantes */}
-      <RestaurantList error={error} restaurants={restaurants} />
-
+      {message && <p>{message}</p>}
+      <RestaurantList restaurants={restaurants} />
     </div>
-
   );
 };
 

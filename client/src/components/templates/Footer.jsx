@@ -9,7 +9,7 @@ export default function Footer() {
           <i className="fa-brands fa-x-twitter fa-2x"></i>
         </a>
         <a href="https://www.tiktok.com/" className="text-white mx-4">
-          <i class="fa-brands fa-tiktok fa-2x"></i>
+          <i className="fa-brands fa-tiktok fa-2x"></i>
         </a>
         <a href="https://www.facebook.com/" className="text-white mx-4">
           <i className="fa-brands fa-facebook fa-2x"></i>

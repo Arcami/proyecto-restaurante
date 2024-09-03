@@ -70,15 +70,17 @@ const getRestaurantByName = async (req, res) => {
 const getRestaurantsByCategory = async (req, res) => {
     try {
         const { category } = req.query;
-        const restaurant = await Restaurant.find({ category: category });
-        if (!restaurant) {
-            return res.status(404).json({ message: "Restaurantes no encontrados" });
+        const restaurants = await Restaurant.find({ category: category });
+        if (restaurants.length === 0) {
+            return res.status(200).json({ message: "No hay restaurantes todavía para esta categoría" });
         }
-        res.status(200).json({ restaurant });
+        res.status(200).json(restaurants);  // Devuelve directamente la lista de restaurantes
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
+
 
 module.exports = {
     authRestaurant,

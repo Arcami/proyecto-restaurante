@@ -24,49 +24,49 @@ const Login = () => {
       });
 
 
-            const data = await response.json();
+      const data = await response.json();
 
-            if (!response.ok) {
-                // La respuesta no es OK, intenta analizar el error
-                setError(data.message || 'Login failed. Please check your credentials.');
-            } else {
-                // La respuesta es OK, redirige al usuario
-                alert('Login successful!');
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('userId', data.user._id);
-                navigate('/'); // Redirige a la página /home tras el inicio de sesión
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-            setError('An error occurred. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (!response.ok) {
+        // La respuesta no es OK, intenta analizar el error
+        setError(data.message || 'Login failed. Please check your credentials.');
+      } else {
+        // La respuesta es OK, redirige al usuario
+        alert('Login successful!');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user._id);
+        navigate('/'); // Redirige a la página /home tras el inicio de sesión
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
     <Container style={{ width: "300px", margin: "0 auto", padding: "20px" }}>
       <Card>
-        <Card.Title className="text-center">Login</Card.Title>
+        <Card.Title className="text-center">Iniciar sesión</Card.Title>
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form.Group controlId="formUsername" className="mb-3">
-              <Form.Label>Username</Form.Label>
+              <Form.Label>Nombre de usuario</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter your username"
+                placeholder="Introduce tu nombre de usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </Form.Group>
             <Form.Group controlId="formPassword" className="mb-4">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Introduce tu contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -78,12 +78,12 @@ const Login = () => {
               className="w-100 mb-2"
               disabled={loading}
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? "Logging in..." : "Entrar"}
             </Button>
             <p className="text-center">
-              New here?{" "}
+              ¿Eres nuevo?{" "}
               <a href="#" onClick={() => navigate("/register")}>
-                Register
+                Regístrate
               </a>
             </p>
           </Form>

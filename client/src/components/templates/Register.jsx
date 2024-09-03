@@ -47,40 +47,38 @@ const Register = () => {
                     <Form onSubmit={handleSubmit}>
                         {error && <Alert variant="danger">{error}</Alert>}
                         <Form.Group controlId="formUsername" className="mb-3">
-                            <Form.Label>Username</Form.Label>
+                            <Form.Label>Nombre de usuario</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Enter your username"
+                                placeholder="Introduce tu nombre de usuario"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
                         </Form.Group>
                         <Form.Group controlId="formPassword" className="mb-3">
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label>Contraseña</Form.Label>
                             <Form.Control
                                 type="password"
-                                placeholder="Enter your password"
+                                placeholder="Introduce tu contraseña"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                         </Form.Group>
                         <Form.Group controlId="formConfirmPassword" className="mb-4">
-                            <Form.Label>Confirm Password</Form.Label>
+                            <Form.Label>Confirma tu contraseña</Form.Label>
                             <Form.Control
                                 type="password"
-                                placeholder="Confirm your password"
+                                placeholder="Introduce tu contraseña"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                             />
                         </Form.Group>
-                        <p className="text-center mt-2">
-                            ¿Eres restaurante? <a href="#" onClick={() => navigate('/perfilrestaurante')}>¡Haz clic aquí!</a>
-                        </p>
+
                         <Button variant="primary" type="submit" className="w-100 mb-2">
-                            Register
+                            Registrar
                         </Button>
                         <p className="text-center">
                             Ya tienes una cuenta? <a href="#" onClick={() => navigate('/login')}>¡Inicia sesión!</a>

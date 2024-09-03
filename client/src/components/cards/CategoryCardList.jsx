@@ -2,8 +2,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CategoryCard from "./CategoryCard";
+import "../../style/style.css";
 
-export default function CategoryCardList() {
+export default function CategoryCardList({ onCategorySelect }) {
   const settings = {
     dots: false,
     infinite: true,
@@ -18,24 +19,9 @@ export default function CategoryCardList() {
   const foodCategory = [
     { text: "Mexicana", emoji: "🌮" },
     { text: "Italiana", emoji: "🍝" },
-    { text: "China", emoji: "🥡" },
     { text: "Japonesa", emoji: "🍣" },
-    { text: "India", emoji: "🍛" },
-    { text: "Mediterránea", emoji: "🍇" },
-    { text: "Tailandesa", emoji: "🍜" },
-    { text: "Americana", emoji: "🍔" },
-    { text: "Francesa", emoji: "🥖" },
-    { text: "Turca", emoji: "🥙" },
-    { text: "Vietnamita", emoji: "🍲" },
-    { text: "Española", emoji: "🥘" },
-    { text: "Coreana", emoji: "🍗" },
-    { text: "Libanesa", emoji: "🥙" },
-    { text: "Griega", emoji: "🥗" },
-    { text: "Vegetariana", emoji: "🥕" },
-    { text: "Vegana", emoji: "🌱" },
-    { text: "Marisco", emoji: "🦐" },
-    { text: "Barbacoa", emoji: "🍖" },
-    { text: "Fusión", emoji: "🌟" },
+    { text: "Burger", emoji: "🍔" },
+    { text: "Raciones", emoji: "🥘" },
   ];
 
   return (
@@ -48,7 +34,11 @@ export default function CategoryCardList() {
         <div className="slider-container">
           <Slider {...settings}>
             {foodCategory.map((category, index) => (
-              <CategoryCard key={index} category={category} />
+              <CategoryCard
+                key={index}
+                category={category}
+                onClick={() => onCategorySelect(category.text)} // Llama directamente a la función pasada como prop
+              />
             ))}
           </Slider>
         </div>
