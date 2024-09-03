@@ -10,7 +10,7 @@ router.post('/register', authRestaurant);
 router.get('/all', getAllRestaurants);
 
 // Ruta para obtener un restaurante por id
-router.get('/', verifyToken, getRestaurantById);
+router.get('/', getRestaurantById);
 
 // Ruta para obtener un restaurante por nombre
 router.get('/search', getRestaurantByName);
