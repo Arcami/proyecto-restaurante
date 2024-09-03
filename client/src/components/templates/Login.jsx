@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert, Card } from "react-bootstrap";
@@ -23,53 +24,71 @@ const Login = () => {
         body: JSON.stringify({ username, password }),
       });
 
-
       const data = await response.json();
 
       if (!response.ok) {
-        // La respuesta no es OK, intenta analizar el error
-        setError(data.message || 'Login failed. Please check your credentials.');
+        setError(
+          data.message || "Login failed. Please check your credentials."
+        );
       } else {
-        // La respuesta es OK, redirige al usuario
-        alert('Login successful!');
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.user._id);
-        navigate('/'); // Redirige a la página /home tras el inicio de sesión
+        alert("Login successful!");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.user._id);
+        navigate("/");
+        window.location.reload();
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      setError('An error occurred. Please try again.');
+      console.error("Error during login:", error);
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
     <Container style={{ width: "300px", margin: "0 auto", padding: "20px" }}>
-      <Card>
+      <Card style={{ backgroundColor: "#FFF", color: "#C32C23" }}>
         <Card.Title className="text-center">Iniciar sesión</Card.Title>
         <Card.Body>
           <Form onSubmit={handleSubmit}>
-            {error && <Alert variant="danger">{error}</Alert>}
+            {error && (
+              <Alert
+                variant="danger"
+                style={{ backgroundColor: "#C32C23", color: "#FFF" }}
+              >
+                {error}
+              </Alert>
+            )}
             <Form.Group controlId="formUsername" className="mb-3">
-              <Form.Label>Nombre de usuario</Form.Label>
+              <Form.Label style={{ color: "#5B5B5B" }}>
+                Nombre de usuario
+              </Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Introduce tu nombre de usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
+                style={{
+                  backgroundColor: "#D8D8D8",
+                  color: "#3D3D3D",
+                  border: "1px solid #3D3D3D",
+                }}
               />
             </Form.Group>
             <Form.Group controlId="formPassword" className="mb-4">
-              <Form.Label>Contraseña</Form.Label>
+              <Form.Label style={{ color: "#5B5B5B" }}>Contraseña</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Introduce tu contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                style={{
+                  backgroundColor: "#D8D8D8",
+                  color: "#3D3D3D",
+                  border: "1px solid #3D3D3D",
+                }}
               />
             </Form.Group>
             <Button
@@ -77,12 +96,17 @@ const Login = () => {
               type="submit"
               className="w-100 mb-2"
               disabled={loading}
+              style={{ backgroundColor: "#C32C23", borderColor: "#C32C23" }}
             >
               {loading ? "Logging in..." : "Entrar"}
             </Button>
-            <p className="text-center">
+            <p className="text-center" style={{ color: "#C32C23" }}>
               ¿Eres nuevo?{" "}
-              <a href="#" onClick={() => navigate("/register")}>
+              <a
+                href="/register"
+                onClick={() => navigate("/register")}
+                style={{ color: "#C32C23" }}
+              >
                 Regístrate
               </a>
             </p>
