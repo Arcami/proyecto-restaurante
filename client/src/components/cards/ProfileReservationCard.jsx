@@ -37,6 +37,26 @@ export default function ProfileReservationCard({
         >
           Visitar
         </button>
+       {/*  <button
+          onClick={() => {
+            navigate("/restaurant", { state: { restaurantId } });
+          }}
+        >
+          Editar
+        </button>
+        <button type="delete" onClick={() => {
+          fetch('http://localhost:3001/reservations/delete/?reservationId='+reservationId)
+              method: 'DELETE',
+                        headers: { 
+                            'Authorization': localStorage.getItem('token'),
+                            'Content-Type': 'application/json',
+                           },
+                        })
+                        window.location.reload();
+          }}
+        >
+          Borrar
+        </button> */}
       </div>
     </div>
   );

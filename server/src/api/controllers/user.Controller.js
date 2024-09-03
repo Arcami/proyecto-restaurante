@@ -95,8 +95,23 @@ const getUserById = async (req, res) => {
   }
 };
 
+const editUser = async (req, res) => {
+    try {
+        const user = req.body;
+        console.log(user);
+        const updated = await User.findByIdAndUpdate(user.id, user,  { new: true });
+        if(!updated) {
+            res.status(404).json({ message: "No se ha podido modificar el usuario"});
+        }
+        res.status(200).json(updated);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
   registerUser,
   login,
   getUserById,
+  editUser
 };

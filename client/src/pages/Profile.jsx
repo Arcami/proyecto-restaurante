@@ -67,7 +67,7 @@ const Profile = () => {
               },
             }
           );
-
+              
           if (!restaurantResponse.ok) {
             throw new Error(
               `Error fetching restaurant with ID: ${reservation.restaurantId}`
