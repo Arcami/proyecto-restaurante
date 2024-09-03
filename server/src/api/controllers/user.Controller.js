@@ -26,13 +26,15 @@ const registerUser = async (req, res) => {
     const savedUser = await newUser.save();
     console.log(savedUser);
     const token = jwt.sign(
-        { id: savedUser._id, username: savedUser.username },
-        process.env.JWT_SECRET,
-        { expiresIn: "1h" }
-      );
-    res
-      .status(201)
-      .json({ token, message: "User registered successfully", user: savedUser });
+      { id: savedUser._id, username: savedUser.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    res.status(201).json({
+      token,
+      message: "User registered successfully",
+      user: savedUser,
+    });
   } catch (err) {
     console.error("Error during registration:", err); // Imprimir error en la consola
     res.status(500).json({ error: err.message });
@@ -96,22 +98,46 @@ const getUserById = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-    try {
-        const user = req.body;
-        console.log(user);
-        const updated = await User.findByIdAndUpdate(user.id, user,  { new: true });
-        if(!updated) {
-            res.status(404).json({ message: "No se ha podido modificar el usuario"});
-        }
-        res.status(200).json(updated);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+  try {
+    const { username, password } = req.body;
+    const picture = req.file ? req.file.path : undefined;
+
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) return res.status(401).json({ msg: "No token provided" });
+
+    const token = authHeader.split(" ")[1];
+    if (!token) return res.status(401).json({ msg: "No token provided" });
+
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+      if (err) return res.status(401).json({ msg: "Invalid token" });
+
+      const userId = decoded.id;
+
+      const user = await User.findById(userId);
+      if (!user) return res.status(404).json({ msg: "User not found" });
+
+      // Update user fields
+      if (username) user.username = username;
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+      }
+      if (picture) user.picture = picture;
+
+      const updatedUser = await user.save();
+      res
+        .status(200)
+        .json({ message: "User updated successfully", user: updatedUser });
+    });
+  } catch (err) {
+    console.error("Error during user update:", err); // Imprimir error en la consola
+    res.status(500).json({ error: err.message });
+  }
 };
 
 module.exports = {
   registerUser,
   login,
   getUserById,
-  editUser
+  editUser,
 };

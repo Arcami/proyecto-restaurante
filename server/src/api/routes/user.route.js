@@ -5,17 +5,17 @@ const {
   registerUser,
   login,
   getUserById,
-  editUser
+  editUser,
 } = require("../controllers/user.Controller");
 
 // Ruta para registrar un usuario
-router.post("/register", upload.single("picture"), registerUser);
+router.post("/register", registerUser);
 
 // Ruta para el login
 router.post("/login", login);
 
 // Editar usuario
-router.post("/edit", editUser);
+router.put("/edit", upload.single("picture"), editUser);
 
 // Ruta para obtener un usuario por ID (ejemplo)
 router.get("/profile", getUserById);
