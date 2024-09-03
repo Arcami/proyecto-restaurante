@@ -11,7 +11,7 @@ import Footer from "../components/templates/Footer.jsx";
 import RestaurantPage from "../pages/RestaurantPage.jsx";
 import ThemeProvider from "../context/ThemeContext";
 import Profile from "../pages/Profile.jsx";
-import ReservationForm from "../pages/ReservationForm.jsx";
+import ReservationForm from "../pages/ReservationPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -25,7 +25,7 @@ const AppRoutes = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/restaurant" element={<RestaurantPage />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/reservations" element={<ReservationForm />} />
+          <Route path="/reservation" element={<ReservationForm />} />
         </Routes>
         <Footer />
       </ThemeProvider>

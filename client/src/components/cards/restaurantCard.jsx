@@ -16,6 +16,10 @@ const RestaurantCard = ({ name, picture, address, category, id }) => {
           navigate('/restaurant', {state:{restaurantId: id}})
         }
            }>Visitar</button>
+        <button onClick={() => {
+          navigate('/reservation', {state:{restaurantId: id}})
+        }
+           }>Reservar</button>
       </div>
     </div>
   );

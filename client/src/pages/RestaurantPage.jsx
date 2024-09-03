@@ -4,14 +4,18 @@ import {useLocation} from 'react-router-dom';
 import RestaurantMenu from '../components/templates/restaurantMenu';
 import RestaurantUserReservations from '../components/templates/restaurantUserReservations';
 import ReviewsList from '../components/templates/restaurantReviews';
+import { useNavigate } from 'react-router-dom';
 
 
 const RestaurantList = () => {
   const [restaurant, setRestaurant] = useState({'restaurant':{}});
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const id = location.state.restaurantId;
-  console.log(id)
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -19,15 +23,23 @@ const RestaurantList = () => {
         fetch('http://localhost:3001/restaurants/?id='+id, {
           method: 'GET',
           headers: {
+            'Authorization': token,
             'Content-Type': 'application/json',
           },
         })
         .then((res) => {
+         if ( res.status == 403) {
+              navigate('/login')
+          }
           return res.json();
         })
         .then((data) => {
           console.log(data);
-          setRestaurant(data);
+          if(data){
+           setLoading(false);
+          setRestaurant(data); 
+          }
+          
         })
 
       } catch (err) {
@@ -36,8 +48,10 @@ const RestaurantList = () => {
     };
 
     fetchRestaurants();
-  }, [id]);
-
+  }, [id, loading]);
+  if (loading){
+    return <p>Loading</p>
+  }
   if (error) {
     return <div>Error: {error}</div>; 
   }

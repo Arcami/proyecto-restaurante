@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authRestaurant, getAllRestaurants, getRestaurantById, getRestaurantByName, getRestaurantsByCategory } = require('../controllers/restaurant.controller');
+const { verifyToken }  = require ('../../middleware/auth')
 
 // Ruta para crear un restaurante
 router.post('/register', authRestaurant);
@@ -9,7 +10,7 @@ router.post('/register', authRestaurant);
 router.get('/all', getAllRestaurants);
 
 // Ruta para obtener un restaurante por id
-router.get('/', getRestaurantById);
+router.get('/', verifyToken, getRestaurantById);
 
 // Ruta para obtener un restaurante por nombre
 router.get('/search', getRestaurantByName);
