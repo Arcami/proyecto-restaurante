@@ -8,7 +8,7 @@ export default function ProfileReservationCard({
   restaurantId,
   restaurantName,
 }) {
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
 
   // Format the date to a more readable format
   const formattedDate = new Date(date).toLocaleDateString("es-ES", {
@@ -32,7 +32,7 @@ export default function ProfileReservationCard({
         </p>
         <button
           onClick={() => {
-            navigate("/restaurant", { state: { restaurantId } });
+            Navigate("/restaurant", { state: { restaurantId } });
           }}
         >
           Visitar
