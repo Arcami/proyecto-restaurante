@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import UserCard from "../components/cards/userCard";
-import RestaurantCard from "../components/cards/restaurantCard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { IoSearchOutline } from "react-icons/io5";
+import ProfileReservationCard from "../components/cards/ProfileReservationCard";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
-  const [restaurant, setRestaurant] = useState(null);
-  const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,8 +30,18 @@ const Profile = () => {
         const userData = await userResponse.json();
         setUser(userData);
 
-        const restaurantsResponse = await fetch(
-          "http://localhost:3001/restaurants/all",
+        await getUserReservations();
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const getUserReservations = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/reservations/user?userId=${userId}`,
           {
             method: "GET",
             headers: {
@@ -44,57 +50,55 @@ const Profile = () => {
           }
         );
 
-        if (!restaurantsResponse.ok)
-          throw new Error("Error fetching restaurants data");
-        const restaurantsData = await restaurantsResponse.json();
-        setRestaurants(restaurantsData);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const reservations = await response.json();
+
+        const reservationsWithRestaurantNames = [];
+        for (const reservation of reservations) {
+          const restaurantResponse = await fetch(
+            `http://localhost:3001/restaurants?id=${reservation.restaurantId}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!restaurantResponse.ok) {
+            throw new Error(
+              `Error fetching restaurant with ID: ${reservation.restaurantId}`
+            );
+          }
+
+          const restaurantData = await restaurantResponse.json();
+          const reservationWithRestaurant = {
+            ...reservation,
+            restaurantName: restaurantData.restaurant.name,
+          };
+
+          reservationsWithRestaurantNames.push(reservationWithRestaurant);
+        }
+
+        setRestaurants(reservationsWithRestaurantNames);
+        setError(null);
       } catch (error) {
         setError(error.message);
-      } finally {
-        setLoading(false);
+        setRestaurants([]);
+        console.error("Error fetching restaurant data:", error);
       }
     };
 
     fetchData();
-  }, [navigate]);
-
-  const getRestaurantByName = async (name) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/restaurants/search?name=${name}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      setRestaurant(data);
-      setError(null);
-    } catch (error) {
-      setError(error.message);
-      setRestaurant(null);
-      console.error("Error fetching restaurant data:", error);
-    }
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query) {
-      getRestaurantByName(query);
-    }
-  };
+  }, [userId]);
 
   if (loading)
     return (
       <div className="container mt-5">
-        <p>Loading...</p>
+        <p>Cargando...</p>
       </div>
     );
   if (error)
@@ -108,57 +112,31 @@ const Profile = () => {
     <div className="container mt-5">
       <div className="row mb-4">
         <div className="col-md-4">
-          <form onSubmit={handleSearch}>
-            <div className="input-group mb-3">
-              <IoSearchOutline
-                size={24}
-                className="input-group-text cursor-pointer"
-              />
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search restaurants..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                style={{ borderRadius: "0.375rem" }}
-              />
-              <button type="submit" className="btn btn-primary">
-                Search
-              </button>
-            </div>
-          </form>
-
           {user ? (
             <UserCard username={user.username} picture={user.picture} />
           ) : (
             <p>No user data available</p>
           )}
-
-          {restaurant && (
-            <div className="mt-3">
-              <h3>Search Result</h3>
-              <p>Owner: {restaurant.owner}</p>
-              <p>Picture: {restaurant.picture}</p>
-              <p>Address: {restaurant.address}</p>
-              <p>Category: {restaurant.category}</p>
-            </div>
-          )}
         </div>
 
         <div className="col-md-8">
-          <h2>Favorite Restaurants</h2>
+          <h2>Mis reservas</h2>
           <div className="row">
             {restaurants.length > 0 ? (
-              restaurants.map((restaurant) => (
-                <div className="col-md-4 mb-4" key={restaurant.id}>
-                  <RestaurantCard
-                    name={restaurant.name}
-                    image={restaurant.image}
+              restaurants.map((reservation) => (
+                <div className="col-md-4 mb-4" key={reservation._id}>
+                  <ProfileReservationCard
+                    contactInfo={reservation.contactInfo}
+                    date={reservation.date}
+                    numberOfGuests={reservation.numberOfGuests}
+                    status={reservation.status}
+                    restaurantId={reservation.restaurantId}
+                    restaurantName={reservation.restaurantName}
                   />
                 </div>
               ))
             ) : (
-              <p>No restaurants available</p>
+              <p>Actualmente no tienes ninguna reserva.</p>
             )}
           </div>
         </div>
