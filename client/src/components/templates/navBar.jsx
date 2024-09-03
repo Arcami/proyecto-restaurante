@@ -5,7 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
 import { ThemeContext } from "../../context/ThemeContext";
 import { BiAdjust } from "react-icons/bi";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -13,17 +13,29 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleLoginClick = () => {
-    navigate("/login"); // Redirigir a la página de login
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    if (userId && token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+  const handleUserIconClick = () => {
+    if (isAuthenticated) navigate("/profile");
+    else navigate("/login");
   };
 
   const handleLogoutClick = () => {
-    // Aquí puedes agregar la lógica para cerrar sesión, como eliminar el token de autenticación
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
-    navigate("/login"); // Redirige al usuario a la página de login después de cerrar sesión
+    navigate("/home");
   };
   const handleLogoClick = () => {
-    navigate("/home"); // Redirige a la página de inicio
+    navigate("/home");
   };
 
   return (
@@ -51,8 +63,19 @@ const Navbar = () => {
         </div>
         <div className="col-md-4 d-flex justify-content-end align-items-center">
           <div className="me-3">
-            {/* Agregar la función onClick para redirigir al hacer clic en el icono */}
-            {isAuthenticated ? (
+            <FaRegUser
+              size={24}
+              style={{
+                color: theme === "light" ? "#000" : "#fff",
+                cursor: "pointer",
+              }}
+              onClick={handleUserIconClick}
+              title={isAuthenticated ? "Perfil" : "Login"}
+            />
+          </div>
+
+          {isAuthenticated ? (
+            <div className="me-3">
               <HiOutlineLogout
                 size={24}
                 style={{
@@ -60,18 +83,10 @@ const Navbar = () => {
                   cursor: "pointer",
                 }}
                 onClick={handleLogoutClick}
+                title="Cerrar sesión"
               />
-            ) : (
-              <FaRegUser
-                size={24}
-                style={{
-                  color: theme === "light" ? "#000" : "#fff",
-                  cursor: "pointer",
-                }}
-                onClick={handleLoginClick}
-              />
-            )}
-          </div>
+            </div>
+          ) : null}
           <div>
             <BiAdjust
               size={24}
