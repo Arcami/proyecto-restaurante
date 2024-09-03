@@ -1,0 +1,52 @@
+/* styles.css */
+body {
+    background-color: #f8f9fa;
+    /* Gris claro para el fondo */
+}
+
+header h1 {
+    color: #C32C23;
+    /* Rojo */
+}
+
+.btn-danger {
+    background-color: #C32C23;
+    /* Rojo */
+    border-color: #C32C23;
+    /* Rojo */
+}
+
+.input-group-text {
+    background-color: #C32C23;
+    /* Rojo */
+    border-color: #C32C23;
+    /* Rojo */
+}
+
+.form-control {
+    border-color: #5B5B5B;
+    /* Gris medio */
+}
+
+.container {
+    background-color: #FFFFFF;
+    /* Fondo blanco para el contenedor principal */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 576px) {
+    .input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-group .btn {
+        margin-top: 10px;
+    }
+}
