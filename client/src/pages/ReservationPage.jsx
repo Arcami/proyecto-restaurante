@@ -72,7 +72,7 @@ const ReservationPage = () => {
       "userId": localStorage.getItem('userId'),
       "numberOfGuests": reservationData.numberOfGuests,
       "menuItems": menuList,
-      "datetime": reservationData.datetime, // Añadido
+      "date": reservationData.date,
       "contactInfo": {
         "guestName": reservationData.name,
         "phone": reservationData.tel
@@ -140,10 +140,10 @@ const ReservationPage = () => {
             </div>
 
             <div className="mb-3">
-              <label className="form-label">Fecha y Hora</label>
+              <label className="form-label">Fecha</label>
               <input
-                type="datetime-local"
-                name="datetime"
+                type="date"
+                name="date"
                 className="form-control"
                 onChange={handleInputChange}
               />

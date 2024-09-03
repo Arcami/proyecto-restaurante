@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 const reservationSchema = new Schema(
   {
     userId: {
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'users', 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users',
       required: true
     },
     restaurantId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'restaurant', 
+      ref: 'restaurant',
       required: true
     },
     date: {
@@ -27,7 +27,7 @@ const reservationSchema = new Schema(
       ref: "menu",
       required: true
     }],
-    
+
 
     status: {
       type: String,
