@@ -1,30 +1,38 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const restaurantReservationCards = (reservation) => {
+const RestaurantReservationCard = ({ reservation = {} }) => {
+  // Destructura con valores predeterminados para evitar errores si reservation es undefined
   const {
-    contactInfo: { guestName, phone },
-    date,
-    numberOfGuests,
-    status,
+    contactInfo: { guestName = "Invitado", phone = "No disponible" } = {},
+    date = "No disponible",
+    numberOfGuests = "No disponible",
+    status = "Desconocido",
   } = reservation;
+
   return (
-    <div className="card mb-3 shadow-sm">
-      <div className="card-body">
-        <h5 className="card-title">Reserva de {guestName}</h5>
+    <div className="card mb-3 shadow-sm" style={{ backgroundColor: "#F5F5F5" }}>
+      <div className="card-body text-center">
+        <h5 className="card-title" style={{ color: "#C32C23" }}>
+          Reserva de {guestName}
+        </h5>
         <p className="card-text">
-          <strong>Fecha:</strong> {new Date(date).toLocaleDateString()}
+          <strong style={{ color: "#C32C23" }}>Fecha:</strong>{" "}
+          {new Date(date).toLocaleDateString()}
         </p>
         <p className="card-text">
-          <strong>Número de Invitados:</strong> {numberOfGuests}
-        </p>
-        
-        <p className="card-text">
-          <strong>Estado:</strong>{" "}
-          <span className={`badge bg-${getStatusColor(status)}`}>{status}</span>
+          <strong style={{ color: "#C32C23" }}>Número de Invitados:</strong>{" "}
+          {numberOfGuests}
         </p>
         <p className="card-text">
-          <strong>Teléfono de Contacto:</strong> {phone}
+          <strong style={{ color: "#C32C23" }}>Estado:</strong>{" "}
+          <span className={`badge bg-${getStatusColor(status)}`}>
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </span>
+        </p>
+        <p className="card-text">
+          <strong style={{ color: "#C32C23" }}>Teléfono de Contacto:</strong>{" "}
+          {phone}
         </p>
       </div>
     </div>
@@ -35,14 +43,14 @@ const restaurantReservationCards = (reservation) => {
 const getStatusColor = (status) => {
   switch (status) {
     case "confirmed":
-      return "success";
+      return "success"; // verde
     case "pending":
-      return "warning";
+      return "danger"; // rojo
     case "cancelled":
-      return "danger";
+      return "danger"; // rojo
     default:
-      return "secondary";
+      return "secondary"; // gris
   }
 };
 
-export default restaurantReservationCards;
+export default RestaurantReservationCard;
