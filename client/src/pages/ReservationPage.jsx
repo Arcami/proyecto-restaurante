@@ -9,8 +9,6 @@ import MenuItem from '../components/cards/menuItem';
 
 
 const ReservationPage = () => {
-    const updatedTitle = "12"
-    const menu = ["filete", "patatas"]
     const [menuItems, setMenuItems] = useState([]);
     const [error, setError] = useState(null);
     const [menuQuantities, setMenuQuantities] = useState({});
@@ -77,16 +75,16 @@ const ReservationPage = () => {
     return(
         <div>
             <label>Nombre</label>
-            <input name="name" placeholder={updatedTitle} onChange={handleInputChange}></input>
+            <input name="name" placeholder="Nombre" onChange={handleInputChange}></input>
 
             <label>Teléfono</label>
-            <input type="tel" name="tel" placeholder={updatedTitle} onChange={handleInputChange}></input>
+            <input type="tel" name="tel" placeholder="Número" onChange={handleInputChange}></input>
 
             <label>¿Cuántos sois?</label>
-            <input type="number" min="1" max="12" name="numberOfGuests" placeholder={updatedTitle} onChange={handleInputChange}></input>
+            <input type="number" min="1" max="12" name="numberOfGuests" placeholder="" onChange={handleInputChange}></input>
 
             <label>Fecha</label>
-            <input type="date" name="date" placeholder={updatedTitle} onChange={handleInputChange}></input>
+            <input type="date" name="date" placeholder="" onChange={handleInputChange}></input>
 
             <label>Menú</label>
             
@@ -132,8 +130,10 @@ const ReservationPage = () => {
                     },
                     body: JSON.stringify(body),
                     }) 
-
+                Navigate('/');
+                alert('Reserva realizada con éxito');
              }
+             
              }>Reservar</button>
         </div>
         
