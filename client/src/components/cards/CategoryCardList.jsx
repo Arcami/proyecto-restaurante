@@ -2,11 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CategoryCard from "./CategoryCard";
-<<<<<<< HEAD
 import "../../style/style.css";
-=======
-import("../../style/style.css");
->>>>>>> 62c5c81c6daccc7a9bb8b1e2c932834e5bcf7964
 
 export default function CategoryCardList({ onCategorySelect }) {
   const settings = {

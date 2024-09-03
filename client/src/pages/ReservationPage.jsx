@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import RestaurantCard from '../components/cards/restaurantCard';
 import {useLocation} from 'react-router-dom';
-import RestaurantMenu from '../components/templates/restaurantMenu';
-import RestaurantUserReservations from '../components/templates/restaurantUserReservations';
-import ReviewsList from '../components/templates/restaurantReviews';
 import { useNavigate } from 'react-router-dom';
-import MenuItem from '../components/cards/menuItem';
+
 
 
 const ReservationPage = () => {
