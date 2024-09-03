@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RestaurantList from '../components/templates/RestaurantList';
 import { IoSearchOutline } from 'react-icons/io5';
 import CategoryCardList from '../components/cards/CategoryCardList';
+import './styles.css'; // Importa los estilos del componente
 
 const Home = () => {
   const [query, setQuery] = useState('');
@@ -105,25 +106,29 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>Bienvenido a la página de inicio</h1>
+    <div className="container">
+      <header className="home-header text-center mb-4">
+        <h1 className="display-4">Bienvenido a la página de inicio</h1>
+
+      </header>
       <CategoryCardList onCategorySelect={handleCategorySelect} />
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleSearch} className="home-form">
         <div className="input-group mb-3">
-          <IoSearchOutline size={24} className="input-group-text cursor-pointer" />
+          <span className="input-group-text bg-danger text-white border-danger">
+            <IoSearchOutline size={24} />
+          </span>
           <input
             type="text"
             className="form-control"
-            placeholder="Search restaurants..."
+            placeholder="Buscar restaurantes..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            style={{ borderRadius: '0.375rem' }}
           />
-          <button type="submit" className="btn btn-primary">Search</button>
+          <button type="submit" className="btn btn-danger">Buscar</button>
         </div>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {message && <p>{message}</p>}
+      {error && <p className="home-error text-center">{error}</p>}
+      {message && <p className="home-message text-center">{message}</p>}
       <RestaurantList restaurants={restaurants} />
     </div>
   );

@@ -1,0 +1,47 @@
+/* styles.css */
+
+/* Estilo para el botón "Visitar" */
+.btn-custom-reserve {
+    background-color: #C32C23;
+    /* Rojo para el fondo del botón */
+    color: #FFFFFF;
+    /* Texto blanco en el botón */
+    border: none;
+    /* Sin borde */
+    border-radius: 0.25rem;
+    /* Esquinas redondeadas */
+    padding: 0.5rem 1rem;
+    /* Espaciado interno */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    /* Transición para hover */
+}
+
+.btn-custom-reserve:hover {
+    background-color: #A5281C;
+    /* Rojo oscuro en hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra adicional en hover */
+}
+
+/* Estilo para el botón "Reservar" */
+.btn-custom-book {
+    background-color: #5B5B5B;
+    /* Gris medio para el fondo del botón */
+    color: #FFFFFF;
+    /* Texto blanco en el botón */
+    border: none;
+    /* Sin borde */
+    border-radius: 0.25rem;
+    /* Esquinas redondeadas */
+    padding: 0.5rem 1rem;
+    /* Espaciado interno */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    /* Transición para hover */
+}
+
+.btn-custom-book:hover {
+    background-color: #3D3D3D;
+    /* Gris oscuro en hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra adicional en hover */
+}

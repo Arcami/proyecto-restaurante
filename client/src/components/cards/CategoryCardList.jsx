@@ -25,19 +25,19 @@ export default function CategoryCardList({ onCategorySelect }) {
   ];
 
   return (
-    <div className="category-card-list-component">
-      <div className="container">
+    <div className="category-card-list-container">
+      <div className="container text-center mb-4">
         <h2>¿Qué te apetece comer hoy? 😋</h2>
       </div>
 
-      <div className="container categories-carousel">
+      <div className="container">
         <div className="slider-container">
           <Slider {...settings}>
             {foodCategory.map((category, index) => (
               <CategoryCard
                 key={index}
                 category={category}
-                onClick={() => onCategorySelect(category.text)} // Llama directamente a la función pasada como prop
+                onClick={() => onCategorySelect(category.text)}
               />
             ))}
           </Slider>
