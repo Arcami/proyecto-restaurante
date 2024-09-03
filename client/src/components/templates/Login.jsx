@@ -24,25 +24,25 @@ const Login = () => {
       });
 
 
-            const data = await response.json();
+      const data = await response.json();
 
-            if (!response.ok) {
-                // La respuesta no es OK, intenta analizar el error
-                setError(data.message || 'Login failed. Please check your credentials.');
-            } else {
-                // La respuesta es OK, redirige al usuario
-                alert('Login successful!');
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('userId', data.user._id);
-                navigate('/'); // Redirige a la página /home tras el inicio de sesión
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-            setError('An error occurred. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (!response.ok) {
+        // La respuesta no es OK, intenta analizar el error
+        setError(data.message || 'Login failed. Please check your credentials.');
+      } else {
+        // La respuesta es OK, redirige al usuario
+        alert('Login successful!');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user._id);
+        navigate('/'); // Redirige a la página /home tras el inicio de sesión
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (

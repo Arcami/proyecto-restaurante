@@ -6,7 +6,7 @@ import Review from "../components/cards/reviewCard.jsx";
 import ReviewFront from "../pages/reviewPage.js";
 import ReservationCard from "../components/cards/reservationCard.jsx";
 import Home from "../pages/Home.jsx";
-import NavBar from "../components/templates/Navbar.jsx";
+import Navbar from "../components/templates/Navbar.jsx";
 import Footer from "../components/templates/Footer.jsx";
 import RestaurantPage from "../pages/RestaurantPage.jsx";
 import ThemeProvider from "../context/ThemeContext";
@@ -18,7 +18,7 @@ const AppRoutes = () => {
   return (
     <Router>
       <ThemeProvider>
-        <NavBar />
+        <Navbar />
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
