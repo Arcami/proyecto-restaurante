@@ -5,7 +5,8 @@ const Restaurant = require("../models/restaurant.model");
 // Crear una nueva reserva
 const createReservation = async (req, res) => {
     try {
-        const { userId, restaurantId, date, numberOfGuests, menuItems, totalAmount, contactInfo } = req.body;
+        
+        const { userId, restaurantId, date, numberOfGuests, menuItems, contactInfo } = req.body;
 
         const user = await User.findById(userId);
         const restaurant = await Restaurant.findById(restaurantId);
@@ -20,13 +21,13 @@ const createReservation = async (req, res) => {
             date,
             numberOfGuests,
             menuItems,
-            totalAmount,
             contactInfo
         });
 
         await newReservation.save();
         res.status(201).json(newReservation);
     } catch (err) {
+        console.log('XXXXXXXXX');
         res.status(409).json({ message: err.message });
     }
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authRestaurant, getAllRestaurants, getRestaurantById, getRestaurantByName, getRestaurantsByCategory } = require('../controllers/restaurant.controller');
+const { verifyToken }  = require ('../../middleware/auth')
 
 // Ruta para crear un restaurante
 router.post('/register', authRestaurant);

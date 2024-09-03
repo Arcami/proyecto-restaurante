@@ -27,10 +27,7 @@ const reservationSchema = new Schema(
       ref: "menu",
       required: true
     }],
-    totalAmount: {
-      type: Number,
-      required: true
-    },
+    
 
     status: {
       type: String,

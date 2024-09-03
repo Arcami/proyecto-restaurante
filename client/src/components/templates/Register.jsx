@@ -27,7 +27,12 @@ const Register = () => {
                 body: JSON.stringify({ username, password }),
             });
 
+            const data = await response.json();
+
             if (response.ok) {
+                
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userId', data.user._id);
                 alert('Registration successful!');
                 navigate('/home');
             } else {

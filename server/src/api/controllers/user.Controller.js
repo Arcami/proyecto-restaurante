@@ -5,8 +5,7 @@ const User = require("../models/user.model");
 // Función para registrar un usuario
 const registerUser = async (req, res) => {
   try {
-    const { username, password, role, reservations } = req.body;
-    const picture = req.file.path;
+    const { username, password } = req.body;
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ username });
@@ -21,16 +20,19 @@ const registerUser = async (req, res) => {
     const newUser = new User({
       username,
       password: passwordHash,
-      picture,
-      role,
-      reservations,
     });
 
     // Guardar usuario en la base de datos
     const savedUser = await newUser.save();
+    console.log(savedUser);
+    const token = jwt.sign(
+        { id: savedUser._id, username: savedUser.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
     res
       .status(201)
-      .json({ message: "User registered successfully", user: savedUser });
+      .json({ token, message: "User registered successfully", user: savedUser });
   } catch (err) {
     console.error("Error during registration:", err); // Imprimir error en la consola
     res.status(500).json({ error: err.message });
@@ -93,8 +95,23 @@ const getUserById = async (req, res) => {
   }
 };
 
+const editUser = async (req, res) => {
+    try {
+        const user = req.body;
+        console.log(user);
+        const updated = await User.findByIdAndUpdate(user.id, user,  { new: true });
+        if(!updated) {
+            res.status(404).json({ message: "No se ha podido modificar el usuario"});
+        }
+        res.status(200).json(updated);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
   registerUser,
   login,
   getUserById,
+  editUser
 };

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const UserCard = ({ username, picture }) => {
+const UserCard = ({ username, picture = "/assets/images/no_pic.jpg" }) => {
   return (
     <div className="card mx-auto" style={{ width: "18rem" }}>
       <img
@@ -21,10 +21,6 @@ const UserCard = ({ username, picture }) => {
 UserCard.propTypes = {
   username: PropTypes.string.isRequired,
   picture: PropTypes.string,
-};
-
-UserCard.defaultProps = {
-  picture: "https://via.placeholder.com/150", // Imagen por defecto si no se proporciona una
 };
 
 export default UserCard;

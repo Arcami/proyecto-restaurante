@@ -6,7 +6,6 @@ const restaurantReservationCards = (reservation) => {
     contactInfo: { guestName, phone },
     date,
     numberOfGuests,
-    totalAmount,
     status,
   } = reservation;
   return (
@@ -19,9 +18,7 @@ const restaurantReservationCards = (reservation) => {
         <p className="card-text">
           <strong>Número de Invitados:</strong> {numberOfGuests}
         </p>
-        <p className="card-text">
-          <strong>Total a Pagar:</strong> ${totalAmount.toFixed(2)}
-        </p>
+        
         <p className="card-text">
           <strong>Estado:</strong>{" "}
           <span className={`badge bg-${getStatusColor(status)}`}>{status}</span>

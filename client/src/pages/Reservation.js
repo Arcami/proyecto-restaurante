@@ -1,5 +1,5 @@
 import React from "react";
-import ReservationCard from "../src/components/cards/reservationCard.jsx"; // Asegúrate de que la ruta sea correcta
+import ReservationCard from "../components/cards/reservationCard"; // Asegúrate de que la ruta sea correcta
 
 const reservation = {
   contactInfo: { guestName: "Juan Pérez", phone: "123-456-7890" }, // Datos de contacto
